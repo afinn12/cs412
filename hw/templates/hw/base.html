@@ -13,11 +13,14 @@
 
     <body>
         <nav>
+            <a href="{% url 'home' %}"><h3>Menu</h3></a>
+            <hr color = "0B1F30">
             <ul>
                 <!-- <li><a href="/hw">Home</a></li>
                 <li><a href="/hw/about">About</a></li> -->
                 <li><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="{% url 'about' %}">About</a></li>
+                <br>
                 <li><a href="{% url 'main' %}">Quotes</a></li>
             </ul>
         </nav>
