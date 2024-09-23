@@ -1,0 +1,48 @@
+<!-- quotes/templates/quotes/showall.html -->
+{% extends 'quotes/base.html' %}
+
+{% load static %}
+
+{% block content %}
+        <h1>About Us</h1>
+ 
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Picture</th>
+                <th>About Me</th>
+            </tr>
+            <tr>
+                <td>{{ people.0 }}</td>
+                <td><img src="{{ pics.0 }}" alt="Image of {{ people.0 }}" style="max-width: 200px;"/></td>
+                <td><p>Alan Turing is most known for creating the Turing Machine and is often regarded as the "father of computer science."</p></td>
+            </tr>
+            <tr>
+                <td>{{ people.1 }}</td>
+                <td><img src="{{ pics.1 }}" alt="Image of {{ people.1 }}" style="max-width: 200px;"/></td>
+                <td> <p>As the founder of Microsoft, Bill Gates developed Windows. He continues to contribute to the tech field and was the richest man in the world for nearly 2 decades.</p></td>
+            </tr>
+            <tr>
+                <td>{{ people.3 }}</td>
+                <td><img src="{{ pics.3 }}" alt="Image of {{ people.3 }}" style="max-width: 200px;"/></td>
+                <td><p>Ron Jeffries is the creator of Agile, a heavily used methodolgy that outlines the process during software development.</p></td>
+            </tr>
+            <tr>
+                <td>{{ people.4 }}</td>
+                <td><img src="{{ pics.4 }}" alt="Image of {{ people.4 }}" style="max-width: 200px;"/></td>
+                <td><p>Linus Torvalds developed Linux, an OS kernel that has now become the most widely used in computer science. </p></td>
+            </tr>
+            <tr>
+                <td>{{ people.2 }}</td>
+                <td><img src="{{ pics.2 }}" alt="Image of {{ people.2 }}" style="max-width: 200px;"/></td>
+                <td><p>Snoop Dog, a pop culture celebrity, also understands the value of computer science. As an active philanthropist, he's advocated for the more education, even appearing in videos teaching children CS concepts.</p></td>
+            </tr>
+            <tr></tr>
+                <td>Anna Finn <br> (Webpage Author) </td>
+                <td><img src="{% static 'IMG_3846.jpeg' %}" alt="Image of Anna" style="max-width: 200px;"/></td>
+                <td><p>Currently, I'm pursing a degree in computer science with a minor in computer engineering and am entering my senior year.</p></td>
+            </tr>
+        </table>
+
+{% endblock %}
+

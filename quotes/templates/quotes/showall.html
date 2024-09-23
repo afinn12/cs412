@@ -1,0 +1,41 @@
+<!-- quotes/templates/quotes/showall.html -->
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+        <h1>All Quotes</h1>
+ 
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Picture</th>
+                <th>Quote</th>
+            </tr>
+            <tr>
+                <td>{{ people.0 }}</td>
+                <td><img src="{{ pics.0 }}" alt="Image of {{ people.0 }}" style="max-width: 200px;"/></td>
+                <td>{{ words.0 }}</td>
+            </tr>
+            <tr>
+                <td>{{ people.1 }}</td>
+                <td><img src="{{ pics.1 }}" alt="Image of {{ people.1 }}" style="max-width: 200px;"/></td>
+                <td>{{ words.1 }}</td>
+            </tr>
+            <tr>
+                <td>{{ people.2 }}</td>
+                <td><img src="{{ pics.2 }}" alt="Image of {{ people.2 }}" style="max-width: 200px;"/></td>
+                <td>{{ words.2 }}</td>
+            </tr>
+            <tr>
+                <td>{{ people.3 }}</td>
+                <td><img src="{{ pics.3 }}" alt="Image of {{ people.3 }}" style="max-width: 200px;"/></td>
+                <td>{{ words.3 }}</td>
+            </tr>
+            <tr>
+                <td>{{ people.4 }}</td>
+                <td><img src="{{ pics.4 }}" alt="Image of {{ people.4 }}" style="max-width: 200px;"/></td>
+                <td>{{ words.4 }}</td>
+            </tr>
+        </table>
+
+{% endblock %}
+

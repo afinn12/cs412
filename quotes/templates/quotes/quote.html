@@ -1,0 +1,17 @@
+<!-- quotes/templates/quotes/quote.html -->
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+        <h1>A Quote!</h1>
+
+        <div class = "all"> 
+            <img  src={{pic}} alt="Picture of my painting" class="pic">
+            <div class="right">
+                <h2> {{name}} <span>once said...</span> </h2> 
+                <br>
+                <p> "{{word}}" </p>
+            </div>
+        </div>
+       
+
+{% endblock %}
