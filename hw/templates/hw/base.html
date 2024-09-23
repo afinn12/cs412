@@ -8,7 +8,7 @@
     <head>
         <title>Hello, world!</title>
         <!-- <link rel="stylesheet" href="/static/styles.css"> -->
-        <link rel="stylesheet" href="{% static 'styles.css' %}">
+        <link rel="stylesheet" href="{% static 'styles2.css' %}">
     </head>
 
     <body>
@@ -18,6 +18,7 @@
                 <li><a href="/hw/about">About</a></li> -->
                 <li><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="{% url 'main' %}">Quotes</a></li>
             </ul>
         </nav>
 
@@ -26,6 +27,6 @@
         {% endblock %}
 
         <hr>
-        This page was generated at {{current_time}}.
+        <p>This page was generated at {{current_time}}.</p>
     </body>
 </html>

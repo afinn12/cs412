@@ -10,5 +10,5 @@ urlpatterns = [
     path(r'', views.main, name="main"),
     path(r'quote', views.quote, name="quote"),
     path(r'showall', views.showall, name="showall"),
-    path(r'about', views.about, name="about"),    
+    path(r'about', views.about, name="aboutus"),    
 ]

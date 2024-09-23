@@ -9,5 +9,4 @@ from . import views
 urlpatterns = [
     path(r'', views.home, name="home"),
     path(r'about', views.about, name="about"),
-    
 ]
