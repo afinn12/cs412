@@ -64,11 +64,11 @@ def quote(request):
 
 def showall(request):
     '''
-    Function to handle the URL request for /quotes/showall (showall page).
-    Delegate rendering to the template quotes/showall.html.
+    Function to handle the URL request for /quotes/show_all (showall page).
+    Delegate rendering to the template quotes/show_all.html.
     '''
     # use this template to render the response
-    template_name = 'quotes/showall.html'
+    template_name = 'quotes/show_all.html'
 
     # create a dictionary of context variables for the template:
     context = {
