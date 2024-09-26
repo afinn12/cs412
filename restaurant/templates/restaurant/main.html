@@ -6,11 +6,13 @@
  {% extends 'restaurant/base.html' %}
 
  {% block content %}
+
+ {% load static %}
  <!-- fill in this section with specific page detail -->
 <div style="margin-left: 50px;">
     <h1> Welcome to El Jefe's!</h1>
     <h2 style="text-align: center; margin-top: -30px;">The Best Taqueria in Boston!</h2>
-    <img src="https://s3.amazonaws.com/thumbnails.thecrimson.com/photos/2022/02/27/203951_1354528.jpg.1500x999_q95_crop-smart_upscale.jpg" alt="Picture of El Jefe's"> 
+    <img src="{% static 'jefe.jpg' %}"  alt="Picture of El Jefe's"> 
     
 </div>
 
