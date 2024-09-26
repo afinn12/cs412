@@ -56,7 +56,10 @@ def show_confirmation(request):
         burrito_protein = request.POST['burrito-protein']
         food = request.POST.getlist('food')
 
-        special = request.POST['special']
+        special = request.POST['special'].strip()
+
+        if(special == ''):
+            special = 'None'
 
         min = random.randint(30, 60)
 
