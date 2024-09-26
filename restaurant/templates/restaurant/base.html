@@ -13,13 +13,15 @@
 
     <body>
         <nav>
-            <hr color = "black", size="10px", style="margin-top: 77px">
+            <img src="{% static 'logo.png' %}"  alt="Picture of El Jefe's" style="width: 80px; height: auto; margin-top: -8px; margin-bottom: 9px;"> 
+
+            <hr color = "black", size="10px", style="margin-top: 0px">
             <ul>
                 <li><a href="{% url 'show_main' %}">Main Page</a></li>
                 <li><a href="{% url 'show_order' %}">Order</a></li>
             </ul>
         </nav>
-        <h1 class="webpage">El Jefe's</h1>
+        <h1 class="webpage">El Jefe's Taqueria</h1>
 
         {% block content %}
         <!-- fill in this section with specific page detail -->
