@@ -1,0 +1,50 @@
+<!-- restaurant/templates/restaurant/confirmation.html
+ Show a response to the form submission. -->
+
+ {% extends 'restaurant/base.html' %}
+
+ {% block content %}
+ <!-- fill in this section with specific page detail -->
+
+ <div class="confirmation">
+    <h1>Order Confirmation</h1>
+
+    <p class = "thanks">Thank you for your order! It is currently being processed.</p>
+    <p class="ready">Your order will be ready at {{readytime}}</p>
+
+    
+    <p class="bold">Your Order Summary:</p>
+    <ul class="summary">
+        {% for f in food %}
+
+            {% if f == 'Bowl'%}
+                <li>{{f}} - {{bowl_protein}}</li>
+            {% elif f == 'Burrito'%}
+                <li>{{f}} - {{burrito_protein}}</li>
+            {%else%}
+                <li>{{f}}</li>
+            {% endif %}
+            
+        {% endfor %}
+    </ul>
+
+    <p class="bold">Special Instructions:</p>
+    <p style="margin-left: 60px;">{{special}}</p>
+
+    <p class="ready">Total: ${{total}} (with tax)</p>
+
+
+    <p class="bold">Contact Information</p>
+    <div style="margin-left: 60px;">
+        <h2>Name: {{name}}</h2>
+        <h2>Phone: {{phone}}</h2>
+        <h2>Email: {{email}}</h2>
+    </div>
+    
+    <div style="text-align: center;">
+        <a href="{% url 'show_order' %}" class="reorder">Order Again</a>
+    </div>
+
+ </div>
+
+ {% endblock %}

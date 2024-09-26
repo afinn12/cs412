@@ -1,0 +1,35 @@
+<!-- formdata/templates/formdata/base.html 
+ A template with common HTML code that will be re-used by 
+ all of the other templates.
+ -->
+
+{% load static %}
+
+<html>
+    <head>
+        <title>El Jefe's</title>
+        <link rel="stylesheet" href="{% static 'restaurant.css' %}">
+    </head>
+
+    <body>
+        <nav>
+            <hr color = "black", size="10px", style="margin-top: 77px">
+            <ul>
+                <li><a href="{% url 'show_main' %}">Main Page</a></li>
+                <li><a href="{% url 'show_order' %}">Order</a></li>
+            </ul>
+        </nav>
+        <h1 class="webpage">El Jefe's</h1>
+
+        {% block content %}
+        <!-- fill in this section with specific page detail -->
+        {% endblock %}
+
+        <hr>
+        <div style="margin-left: 50px; text-align: center;">
+            <p>Page created by afinn12@bu.edu</p>
+            <p>Generated at: {{current_time}}</p>    
+        </div>
+       
+    </body>
+</html>
