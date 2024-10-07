@@ -16,7 +16,8 @@ h1, h2, h3 {
 }
 
 p {
-    color: #828b82;
+    color: black;
+    text-align: center;
 }
 
 header {
