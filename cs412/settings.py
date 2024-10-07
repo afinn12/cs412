@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     "hw", ## example1
     "quotes", ## assignment3
     "formdata", ## example 2
-    "restaurant"
+    "restaurant",
+    "blog",
 ]
 
 MIDDLEWARE = [
