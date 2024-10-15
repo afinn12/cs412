@@ -1,0 +1,34 @@
+<!-- templates/show_all_profiles.html -->
+<!-- mini_fb/templates/mini_fb/show_all_profiles.html -->
+
+{% extends 'mini_fb/base.html' %}
+{% block content %}
+<main class="grid-container">
+            <img src="{{profile.image_url}}" alt="{{article.image_url}}" class="profile-img">
+            <div> 
+                <br><br><br>
+                <h1>{{profile.first}} {{profile.last}}</h1>
+                <h2>{{profile.city}}</h2>
+                <h3>{{profile.email}}</h3>    
+            </div> 
+</main>
+
+<!-- show the StatusMessages -->
+<div>
+    {% if profile.get_statusmessages %}
+        <h2>Status Messages</h2>
+        <!-- call the get_statusmessages method on the article object -->
+        <!-- {{article.get_statusmessages}} -->
+        {% for s in profile.get_statusmessages %}
+        <div>
+            <strong> {{s.profile.first}} {{s.profile.last}} at {{s.timestamp}}</strong>
+            <p>
+                {{s.message}}
+            </p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <h2>No StatusMessages</h2>
+    {% endif %}
+</div>
+{% endblock %}

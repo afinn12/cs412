@@ -10,10 +10,12 @@
         {% if p.image_url %}
         <img src="{{p.image_url}}" alt="{{p.image_url}}">
         {% endif %}
-        
+
         <div>
-        <h2>{{p.first}} {{p.last}}</h2>
-        <strong>{{p.city}}</strong>
+            <a href="{% url 'profile' p.pk %}"> 
+                <h2>{{p.first}} {{p.last}}</h2>
+            </a>
+            <strong>{{p.city}}</strong>
         </div>
     </article>
     
