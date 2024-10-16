@@ -2,6 +2,7 @@
 # blog/forms.py
 from django import forms
 from .models import Comment
+
 class CreateCommentForm(forms.ModelForm):
     '''A form to add a Comment to the database.'''
     class Meta:
