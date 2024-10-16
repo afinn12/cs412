@@ -16,5 +16,4 @@ urlpatterns = [
     # path(r'create_comment', views.CreateCommentView.as_view(), name="create_comment"), 
     path(r'create_profile', CreateProfileView.as_view(), name="create_profile"), ## NEW 
     path(r'profile/<int:pk>/create_status', CreateStatusMessageView.as_view(), name="create_status"), 
-
 ]
