@@ -2,7 +2,7 @@
 
 body {
     margin: 30px;
-    background: #d1dedd;
+    background: #d1ded6;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -15,6 +15,10 @@ h1, h2, h3 {
     color: #767f7e;
 }
 
+h1 {
+    font-size: 50px;
+}
+
 p {
     color: black;
     text-align: center;
@@ -22,9 +26,53 @@ p {
 
 header {
     max-width: 1200px;
-    margin: 40px auto;
+    margin: 0 auto;
     border-bottom: 1px solid #bbc7c7;
+    display: flex;
 }
+
+.title{
+    margin-top: 50px;
+    color: #767f7e;
+    font-size: 50px;
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+.create {
+    color: #767f7e;
+    background-color: white;
+    border: 4px solid #b3d0be;
+    border-radius: 30px;
+    padding: 8px;
+    height: fit-content;
+    margin-top: 65px;
+    margin-left: 40px;
+    text-decoration: none;
+}
+
+.status {
+    color: black;
+    font-weight: bolder;
+    background-color: #d1ded6;
+    border: 4px solid #b3d0be;
+    border-radius: 30px;
+    padding: 8px;
+    height: fit-content;
+    text-decoration: none;
+}
+
+textarea {
+    height: 20px; 
+    resize: none; 
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+input {
+    margin: 5px auto;
+}
+
 .grid-container {
     background: #eee;
     max-width: 900px;
@@ -56,15 +104,27 @@ article img, article.featured img {
 
 article p, article h3 {
     margin: 20px 10px;
-
 }
 
 .profile-img {
     height: 50vh;
-    width: 20vw;
+    width: 30vw;
     object-fit: cover; 
     border: 4px solid #0a0450;
     border-radius: 8px;
+}
+
+.box {
+    margin: 0 auto;
+    background-color: white;
+    max-width: 1200px;
+    padding: 5px;
+    border-radius: 20px;
+}
+
+
+.box p {
+    text-align: left;
 }
 
 nav li {
