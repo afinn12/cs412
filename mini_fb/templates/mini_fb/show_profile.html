@@ -4,7 +4,7 @@
 {% extends 'mini_fb/base.html' %}
 {% block content %}
 <main class="grid-container">
-            <img src="{{profile.image_url}}" alt="{{article.image_url}}" class="profile-img">
+            <img class="profile-img" src="{{profile.image_url}}" alt="{{article.image_url}}">
             <div> 
                 <br><br><br>
                 <h2>{{profile.first}} {{profile.last}}</h2>
@@ -16,6 +16,7 @@
 <!-- show the StatusMessages -->
 <div class="box">
     <br>
+    <a class="status" href="{% url 'update_profile' profile.pk %}">Update Profile</a>
     <a class="status" href="{% url 'create_status' profile.pk %}">Create Status Message</a>
     {% if profile.get_statusmessages %}
         <h2>Status Messages</h2>
@@ -23,6 +24,10 @@
         <!-- {{article.get_statusmessages}} -->
         {% for s in profile.get_statusmessages %}
         <div>
+            {% for img in s.get_images %}
+                <img class="post-img" src='{{img.image_file.url}}' alt='{{img.image_file.url}}'>
+            {% endfor %}
+            <br>
             <strong> {{s.profile.first}} {{s.profile.last}} at {{s.timestamp}}</strong>
             <p>{{s.message}}</p>
         </div>

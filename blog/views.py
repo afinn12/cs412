@@ -4,12 +4,16 @@ from django.shortcuts import render
 from django.urls import reverse
 from typing import Any
 
-# Create your views here.
 from django.views.generic import ListView, DetailView, CreateView ## NEW
 from .models import * ## import the models (e.g., Article)
 from .forms import * ## import the forms (e.g., CreateCommentForm)
-
 import random
+from django.views.generic.edit import UpdateView ## add UpdateView to list of imports
+from .forms import UpdateArticleForm
+from django.views.generic.edit import DeleteView
+
+
+# Create your views here.
 
 # class-based view
 class ShowAllView(ListView):
@@ -91,3 +95,51 @@ class CreateCommentView(CreateView):
 
         # delegate work to superclass version of this method
         return super().form_valid(form)
+    
+
+class CreateArticleView(CreateView):
+    '''A view class to create a new Article instance.'''
+    form_class = CreateArticleForm
+    template_name = 'blog/create_article_form.html'
+    def form_valid(self, form):
+        '''This method is called as part of the form processing.'''
+        print(f'CreateArticleView.form_valid(): form.cleaned_data={form.cleaned_data}')
+        # let the superclass do the real work
+        return super().form_valid(form)
+
+
+# class UpdateArticleView(UpdateView):
+#     '''A view to update an Article and save it to the database.'''
+#     form_class = UpdateArticleForm
+#     template_name = "blog/update_article_form.html"
+    
+#     def form_valid(self, form):
+#         '''
+#         Handle the form submission to create a new Article object.
+#         '''
+#         print(f'UpdateArticleView: form.cleaned_data={form.cleaned_data}')
+#         return super().form_valid(form)
+
+class UpdateArticleView(UpdateView):
+    '''A view to update article and save it to the database.'''
+    form_class = UpdateArticleForm
+    template_name = "blog/update_article_form.html"
+    model = Article ## add this model and the QuerySet will automatically find instance by PK
+
+class DeleteCommentView(DeleteView):
+    '''A view to delete a comment and remove it from the database.'''
+    template_name = "blog/delete_comment_form.html"
+    model = Comment
+    context_object_name = 'comment'
+    
+    def get_success_url(self):
+        '''Return a the URL to which we should be directed after the delete.'''
+        # get the pk for this comment
+        pk = self.kwargs.get('pk')
+        comment = Comment.objects.filter(pk=pk).first() # get one object from QuerySet
+        
+        # find the article to which this Comment is related by FK
+        article = comment.article
+        
+        # reverse to show the article page
+        return reverse('article', kwargs={'pk':article.pk})

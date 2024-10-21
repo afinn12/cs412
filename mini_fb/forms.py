@@ -18,3 +18,18 @@ class CreateProfileForm(forms.ModelForm):
         '''associate this form with the Comment model; select fields.'''
         model = Profile
         fields = ['first', 'last', 'city', 'email', 'image_url']  # which fields from model should we use
+        labels = {
+            'first': 'First Name',
+            'last': 'Last Name',
+        }
+
+class UpdateProfileForm (forms.ModelForm):
+    '''A form to update a Profile to the database.'''
+    class Meta:
+        '''associate this form with the Profile model.'''
+        model = Profile
+        fields = ['first', 'last', 'city', 'email', 'image_url']  # which fields from model should we use
+        labels = {
+            'first': 'First Name',
+            'last': 'Last Name',
+        }

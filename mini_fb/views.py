@@ -2,13 +2,13 @@
 # mini_fb/views.py
 # Define the views for the mini_fb app:
 #from django.shortcuts import render
-from .models import Profile
+from .models import Profile, Image
 from django.views.generic import ListView, DetailView, CreateView
 from django.urls import reverse
 from typing import Any
 from .forms import * ## import the forms (e.g., CreateStatusMessageForm)
-
-
+from django.views.generic.edit import UpdateView ## add UpdateView to list of imports
+from .forms import UpdateProfileForm
 
 # Create your views here.
 
@@ -60,9 +60,18 @@ class CreateStatusMessageView(CreateView):
         # attach this Profile to the instance of the StatusMessage to set its FK
         form.instance.profile = profile # like: StatusMessage.profile = profile
 
+        # save the status message to database
+        sm = form.save()
+        
+        # read the file from the form:
+        files = self.request.FILES.getlist('files')
+
+        for file in files:
+            image = Image.objects.create(status=sm, image_file=file)
+            image.save()  
+
         # delegate work to superclass version of this method
-        return super().form_valid(form)
-    
+        return super().form_valid(form)    
 
     
 class CreateProfileView(CreateView):
@@ -89,6 +98,11 @@ class CreateProfileView(CreateView):
     def form_valid(self, form):
         '''This method is called after the form is validated, 
         before saving data to the database.'''
-
         # delegate work to superclass version of this method
         return super().form_valid(form)
+    
+
+class UpdateProfileView(UpdateView):
+    form_class = UpdateProfileForm
+    template_name = "mini_fb/update_profile_form.html"
+    model = Profile

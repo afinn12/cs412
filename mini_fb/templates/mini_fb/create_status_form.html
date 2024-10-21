@@ -7,7 +7,7 @@
 <div class="box">
     <h2>Create a Status Message for {{profile.first}} {{profile.last}}</h2>
 
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <!-- simple way to display the form, all one line -->
     <!-- {{form}} -->
@@ -19,7 +19,10 @@
         {{form.as_table}}
         <tr>
             <td></td>
-            <td><input type="submit" name="submit" value="Create Status">
+            <td> 
+                <input type="file" name = "files" multiple />
+                <br>
+                <input type="submit" name="submit" value="Create Status">
             </form>
             <!-- NOTE: the cancel button is its own form!!!! -->
             <form action="{% url 'profile' profile.pk %}">
