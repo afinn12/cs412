@@ -133,6 +133,19 @@ article p, article h3 {
     border-radius: 8px;
 }
 
+.delete-img {
+    height: 100px;
+    width: 100px;
+    object-fit: cover; 
+    display: block;
+}
+
+.delete-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow images to wrap to the next line */
+    gap: 10px; /
+}
+
 .box {
     margin: 0 auto;
     background-color: white;

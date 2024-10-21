@@ -135,3 +135,29 @@ class UpdateStatusView(UpdateView):
     form_class = UpdateStatusForm
     template_name = "mini_fb/update_status_form.html"
     model = StatusMessage
+
+    def form_valid(self, form):
+        # save the status message to database
+        sm = form.save()
+        
+        # read the file from the form:
+        files = self.request.FILES.getlist('files')
+
+        # read the deleted files from the form:
+        deleted = self.request.POST.getlist('delete_images')
+
+        # if not files:
+        #     print("No files uploaded")
+        # else:
+        #     print(f"Files uploaded: {(files)}")
+
+        if deleted:
+            for d in deleted:
+                image = Image.objects.get(pk=d)
+                image.delete()  
+
+        for file in files:
+            image = Image.objects.create(status=sm, image_file=file)
+            image.save()  
+
+        return super().form_valid(form)

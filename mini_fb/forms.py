@@ -37,6 +37,9 @@ class UpdateProfileForm (forms.ModelForm):
 
 class UpdateStatusForm (forms.ModelForm):
     '''A form to update a status to the database.'''
+    # images = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}), required=False)
+
+
     class Meta:
         '''associate this form with the status model.'''
         model = StatusMessage

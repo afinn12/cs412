@@ -3,30 +3,47 @@
 {% extends 'mini_fb/base.html'  %}
 
 {% block content %}
-
 <div class="box">
     <h2>Update Status Message</h2>
 
-    <form method="POST">
-    {% csrf_token %}
- 
-    <table>
-        {% for field in form %}
-        <tr>
-            <th>{{field.name}}</th>
-            <td>{{field}}</td>
-        </tr>
-        {% endfor %}
-        <tr>
-            <td></td>
-            <td>
-                <input type='submit' name = 'update_status' value= 'Update Status!'>
-                <form action="{% url 'profile' statusmessage.profile.pk %}">
-                    <input type='submit' name = 'cancel' value= 'Cancel Update'>
-                </form>
-            </td>
-        </tr>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            {% for field in form %}
+            <tr>
+                <th>{{ field.name }}</th>
+                <td>{{ field }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <th>Images</th>
+                <td>
+                    <div class="delete-container">
+                        {% for image in statusmessage.get_images %}
+                        <div>
+                            <img class="delete-img" src="{{ image.image_file.url }}" alt="Image"/>
+                            <label>
+                                <input type="checkbox" name="delete_images" value="{{ image.pk }}"> Delete
+                            </label>
+                        </div>
+                    {% empty %}
+                        <p>No images uploaded.</p>
+                    {% endfor %}
+                    </div>
+                    <input type="file" name="files" multiple>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" name="update_status" value="Update Status!">
+                    <form action="{% url 'profile' statusmessage.profile.pk %}">
+                        <input type="submit" name="cancel" value="Cancel Update">
+                    </form>
+                </td>     
+            </tr>
         </table>
+    </form>
 </div>
 
 
