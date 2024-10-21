@@ -59,7 +59,26 @@ header {
     border-radius: 30px;
     padding: 8px;
     height: fit-content;
+    width: fit-content;
     text-decoration: none;
+}
+
+input[type="submit"] {
+    font-size: 15px;
+    font-weight: bolder;
+    border: 3px solid black; 
+    padding: 10px 15px; 
+    border-radius: 20px;
+    height: fit-content;
+    width: fit-content;
+}
+
+.submit {
+    background-color: rgb(156, 240, 184);
+}
+
+.cancel {
+    background-color: rgb(216, 133, 133);
 }
 
 .delete-button {
@@ -157,6 +176,26 @@ article p, article h3 {
 
 .box p {
     text-align: left;
+}
+
+.box2 {
+    margin: 0 auto;
+    background-color: #a4d9bb;
+    max-width: 1200px;
+    padding: 20px;
+    border-radius: 20px;
+    margin: 10px;
+}
+
+
+.box3 {
+    margin: 0 auto;
+    width: fit-content;
+    background-color: #56906f;
+    max-width: 1200px;
+    padding: 20px;
+    border-radius: 20px;
+    margin: 10px;
 }
 
 nav li {

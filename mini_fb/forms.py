@@ -21,6 +21,7 @@ class CreateProfileForm(forms.ModelForm):
         labels = {
             'first': 'First Name',
             'last': 'Last Name',
+            'image_url' : 'Image URL',
         }
 
 class UpdateProfileForm (forms.ModelForm):
@@ -32,6 +33,7 @@ class UpdateProfileForm (forms.ModelForm):
         labels = {
             'first': 'First Name',
             'last': 'Last Name',
+            'image_url' : 'Image URL',
         }
 
 

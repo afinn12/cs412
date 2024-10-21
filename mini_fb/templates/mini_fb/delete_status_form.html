@@ -9,11 +9,11 @@
     <div class="delete-button">
         <form method='POST'>
             {% csrf_token %}
-            <input type='submit' name="yes" value="Yes">
+            <input class="submit" type='submit' name="yes" value="Yes">
         </form>
         <form method='GET' action="{% url 'profile' status.profile.pk %}">
             {% csrf_token %}
-            <input type='submit' name="no" value="No">
+            <input class="cancel" type='submit' name="no" value="No">
         </form>
     </div>
    

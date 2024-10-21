@@ -17,16 +17,16 @@
     <table>
         {% for field in form %}
         <tr>
-            <th>{{field.name}}</th>
+            <th>{{field.label}}</th>
             <td>{{field}}</td>
         </tr>
         {% endfor %}
         <tr>
             <td></td>
             <td>
-                <input type='submit' name = 'update_profile' value= 'Update Profile!'>
+                <input class="submit" type='submit' name = 'update_profile' value= 'Update Profile!'>
                 <form action="{% url 'profile' profile.pk %}">
-                    <input type='submit' name = 'cancel' value= 'Cancel Update'>
+                    <input class="cancel" type='submit' name = 'cancel' value= 'Cancel Update'>
                 </form>
             </td>
         </tr>

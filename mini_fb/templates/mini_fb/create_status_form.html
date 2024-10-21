@@ -7,13 +7,15 @@
 <div class="box">
     <h2>Create a Status Message for {{profile.first}} {{profile.last}}</h2>
 
-    <form method="POST" enctype="multipart/form-data">
+    
+    <form method="POST" enctype="multipart/form-data"></form>
     {% csrf_token %}
     <!-- simple way to display the form, all one line -->
     <!-- {{form}} -->
 
     <!-- each field on its own line -->
     <!-- {{form.as_p}} -->
+     
     <table>
         <!-- display form as a table -->
         {{form.as_table}}
@@ -21,13 +23,19 @@
             <td></td>
             <td> 
                 <input type="file" name = "files" multiple />
-                <br>
-                <input type="submit" name="submit" value="Create Status">
-            </form>
-            <!-- NOTE: the cancel button is its own form!!!! -->
-            <form action="{% url 'profile' profile.pk %}">
-                <input type="submit" name="Cancel" value="Cancel">
-            </form>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td> 
+                <div class="delete-button" style="margin-left: -20px;">                        
+                    <input class="submit" type="submit" name="submit" value="Create Status">
+                    </form>
+                    <!-- NOTE: the cancel button is its own form!!!! -->
+                    <form action="{% url 'profile' profile.pk %}">
+                        <input class="cancel" style="margin-right: 50px;" type="submit" name="Cancel" value="Cancel">
+                    </form>
+                </div>
             </td>
         </tr>
     </table>
