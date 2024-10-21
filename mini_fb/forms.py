@@ -33,3 +33,11 @@ class UpdateProfileForm (forms.ModelForm):
             'first': 'First Name',
             'last': 'Last Name',
         }
+
+
+class UpdateStatusForm (forms.ModelForm):
+    '''A form to update a status to the database.'''
+    class Meta:
+        '''associate this form with the status model.'''
+        model = StatusMessage
+        fields = ['message'] 

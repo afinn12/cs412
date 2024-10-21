@@ -1,19 +1,15 @@
-<!-- mini_fb/templates/mini_fb/update_profile_form.html -->
+<!-- mini_fb/templates/mini_fb/update_status_form.html -->
 
 {% extends 'mini_fb/base.html'  %}
 
 {% block content %}
 
 <div class="box">
-    <h2>Update Profile</h2>
+    <h2>Update Status Message</h2>
 
     <form method="POST">
     {% csrf_token %}
-    <!-- simple way to display the form, all one line -->
-    <!-- {{form}} -->
-
-    <!-- each field on its own line -->
-    <!-- {{form.as_p}} -->
+ 
     <table>
         {% for field in form %}
         <tr>
@@ -24,8 +20,8 @@
         <tr>
             <td></td>
             <td>
-                <input type='submit' name = 'update_profile' value= 'Update Profile!'>
-                <form action="{% url 'profile' profile.pk %}">
+                <input type='submit' name = 'update_status' value= 'Update Status!'>
+                <form action="{% url 'profile' statusmessage.profile.pk %}">
                     <input type='submit' name = 'cancel' value= 'Cancel Update'>
                 </form>
             </td>

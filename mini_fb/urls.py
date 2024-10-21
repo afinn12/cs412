@@ -3,7 +3,7 @@
 ## define the URLs for this app
 
 from django.urls import path
-from .views import ShowAllProfiles, ProfileView, CreateProfileView, CreateStatusMessageView, UpdateProfileView # our view class definition 
+from .views import ShowAllProfiles, ProfileView, CreateProfileView, CreateStatusMessageView, UpdateProfileView, DeleteStatusMessageView, UpdateStatusView # our view class definition 
 
 # define a list of valid URL patterns:
 urlpatterns = [
@@ -16,5 +16,9 @@ urlpatterns = [
     # path(r'create_comment', views.CreateCommentView.as_view(), name="create_comment"), 
     path(r'create_profile', CreateProfileView.as_view(), name="create_profile"), 
     path(r'profile/<int:pk>/create_status', CreateStatusMessageView.as_view(), name="create_status"), 
-    path('profile/<int:pk>/update', UpdateProfileView.as_view(), name="update_profile"),
+    path(r'profile/<int:pk>/update', UpdateProfileView.as_view(), name="update_profile"),
+    path(r'status/<int:pk>/delete', DeleteStatusMessageView.as_view(), name='delete_status'),
+    path(r'status/<int:pk>/delete', DeleteStatusMessageView.as_view(), name='delete_status'),
+    path(r'status/<int:pk>/update', UpdateStatusView.as_view(), name='update_status'),
 ]
+

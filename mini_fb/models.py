@@ -44,7 +44,11 @@ class StatusMessage(models.Model):
         '''Return all of the statusmessages about this article.'''
         image = Image.objects.filter(status=self)
         return image
-       
+    
+    def get_absolute_url(self):
+        '''Return the URL that will display an instance of this object.'''
+        # self.pk is the primary key to this Profile instance
+        return reverse('profile', kwargs={'pk': self.profile.pk})
 
 class Image(models.Model):
     status = models.ForeignKey("StatusMessage", on_delete=models.CASCADE)
@@ -54,3 +58,4 @@ class Image(models.Model):
     def __str__(self):
         '''Return a string representation of this Image object.'''
         return f'{self.image_file}'
+        

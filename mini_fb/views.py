@@ -8,7 +8,9 @@ from django.urls import reverse
 from typing import Any
 from .forms import * ## import the forms (e.g., CreateStatusMessageForm)
 from django.views.generic.edit import UpdateView ## add UpdateView to list of imports
-from .forms import UpdateProfileForm
+from .forms import UpdateProfileForm, UpdateStatusForm
+from django.views.generic.edit import DeleteView
+
 
 # Create your views here.
 
@@ -103,6 +105,33 @@ class CreateProfileView(CreateView):
     
 
 class UpdateProfileView(UpdateView):
+    '''A view to update a Profile'''
     form_class = UpdateProfileForm
     template_name = "mini_fb/update_profile_form.html"
     model = Profile
+
+
+class DeleteStatusMessageView(DeleteView):
+    '''A view to delete a StatusMessage and remove it from the database'''
+    
+    template_name = "mini_fb/delete_status_form.html"
+    model = StatusMessage
+    context_object_name = 'status'
+    
+    def get_success_url(self):
+        '''Return a the URL to which we should be directed after the delete.'''
+        # get the pk for this status
+        pk = self.kwargs.get('pk')
+        status = StatusMessage.objects.filter(pk=pk).first() # get one object from QuerySet
+        
+        # find the profile to which this status is related by FK
+        profile = status.profile
+        
+        # reverse to show the article page
+        return reverse('profile', kwargs={'pk':profile.pk})
+
+class UpdateStatusView(UpdateView):
+    '''A view to update a status message'''
+    form_class = UpdateStatusForm
+    template_name = "mini_fb/update_status_form.html"
+    model = StatusMessage
