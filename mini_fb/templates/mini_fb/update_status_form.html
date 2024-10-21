@@ -11,12 +11,12 @@
         <table>
             {% for field in form %}
             <tr>
-                <th>{{ field.name }}</th>
+                <th>{{ field.label }}</th>
                 <td>{{ field }}</td>
             </tr>
             {% endfor %}
             <tr>
-                <th>Images</th>
+                <th>Images:</th>
                 <td>
                     <div class="delete-container">
                         {% for image in statusmessage.get_images %}

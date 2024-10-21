@@ -19,9 +19,11 @@ class CreateProfileForm(forms.ModelForm):
         model = Profile
         fields = ['first', 'last', 'city', 'email', 'image_url']  # which fields from model should we use
         labels = {
-            'first': 'First Name',
-            'last': 'Last Name',
-            'image_url' : 'Image URL',
+            'first': 'First Name:',
+            'last': 'Last Name:',
+            'city': 'City:',
+            'email': 'Email:',
+            'image_url' : 'Image URL:',
         }
 
 class UpdateProfileForm (forms.ModelForm):
@@ -31,9 +33,11 @@ class UpdateProfileForm (forms.ModelForm):
         model = Profile
         fields = ['first', 'last', 'city', 'email', 'image_url']  # which fields from model should we use
         labels = {
-            'first': 'First Name',
-            'last': 'Last Name',
-            'image_url' : 'Image URL',
+            'first': 'First Name:',
+            'last': 'Last Name:',
+            'city': 'City:',
+            'email': 'Email:',
+            'image_url' : 'Image URL:',
         }
 
 
@@ -46,3 +50,6 @@ class UpdateStatusForm (forms.ModelForm):
         '''associate this form with the status model.'''
         model = StatusMessage
         fields = ['message'] 
+        labels = {
+            'message': 'Message:',
+        }
