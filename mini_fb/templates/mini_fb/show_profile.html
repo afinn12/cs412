@@ -5,7 +5,9 @@
 {% block content %}
 <main class="grid-container">
             <img class="profile-img" src="{{profile.image_url}}" alt="{{article.image_url}}">
+            
             <div> 
+                <a class="status-button" style="display: inline-block; margin-top: 10px; " href="{% url 'news_feed' profile.pk %}">{{profile.first}}'s News Feed</a>
                 <h2>{{profile.first}} {{profile.last}}</h2>
                 <h3>{{profile.city}}</h3>
                 <h3>{{profile.email}}</h3>  

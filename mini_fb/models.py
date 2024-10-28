@@ -71,6 +71,25 @@ class Profile(models.Model):
         )
 
         return friend_suggestions
+    
+
+    def get_news_feed(self):
+        '''Return a combined list of status messages for this profile and its friends.'''
+        # Get the current profile's status messages
+        own = StatusMessage.objects.filter(profile=self)
+
+        # Get the friends of this profile
+        friends = self.get_friends()  # Assuming this returns a list of friend Profile instances
+
+        # Get status messages from friends
+        other = StatusMessage.objects.filter(profile__in=friends)
+
+        # Combine own messages and friends' messages
+        all_messages = own | other
+
+        # Return combined messages sorted by timestamp (most recent first)
+        return all_messages.order_by('-timestamp')
+
 
 
     def get_absolute_url(self):

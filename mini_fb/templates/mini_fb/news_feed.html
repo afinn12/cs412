@@ -1,0 +1,39 @@
+<!-- templates/news_feed.html -->
+<!-- mini_fb/templates/mini_fb/news_feed.html -->
+
+{% extends 'mini_fb/base.html' %}
+{% block content %}
+
+<div class="box">
+    <h1>{{ profile.first }}'s News Feed</h1>
+    <a class="status-button" href="{% url 'profile' profile.pk %}">Back {{ profile.first }}'s Profile</a>
+    <br><br><hr>
+    <div class="box2">
+        {% for message in news_feed %}
+            <div class="box3">
+                <a href="{% url 'profile' message.profile.pk %}" style="text-decoration: none; color:black; display: flex; align-items: center;">
+                    <img class="feed-img" src="{{ message.profile.image_url }}" alt="{{ message.profile.first }}'s Profile Picture">
+                    <div style="display: flex; flex-direction: column; margin-left: 10px;">
+                        <strong>{{ message.profile.first }} {{ message.profile.last }}</strong>
+                        <small>{{ message.timestamp }}</small>
+                    </div>
+                </a>
+                <hr>
+
+                <p style="text-align: left;">{{ message.message }}</p>
+                {% if message.get_images %}
+                <div>
+                    {% for pic in message.get_images %}
+                        <img class="feed-img" src="{{ pic.image_file.url }}" alt="{{ message.profile.first }}'s post image">
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+            </div>
+        {% empty %}
+            <p>No messages available.</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
