@@ -1,5 +1,5 @@
-<!-- templates/show_all_profiles.html -->
-<!-- mini_fb/templates/mini_fb/show_all_profiles.html -->
+<!-- templates/show_profile.html -->
+<!-- mini_fb/templates/mini_fb/show_profile.html -->
 
 {% extends 'mini_fb/base.html' %}
 {% block content %}
@@ -13,9 +13,28 @@
             </div> 
 </main>
 
-<!-- show the StatusMessages -->
+<!-- show the Friends and StatusMessages -->
 <div class="box">
+    {% if profile.get_friends %}
+    <h2>Friends</h2>
+    <div class="box2" style="display: flex; flex-wrap: wrap">
+        {% for f in profile.get_friends %}
+            <div class="box3">
+                <a href="{% url 'profile' f.pk %}" style="text-decoration: none; display: flex; flex-direction: column;">
+                    <img class="post-img" src="{{ f.image_url }}" alt="{{ f.first }}'s Proflie Picture">
+                    <strong style="color: black;">{{ f.first }} {{ f.last }}</strong> 
+                </a> 
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <h2>No Friends</h2>
+    {% endif %}
     <br>
+
+    <a class="status-button" href="{% url 'friend_suggestions' profile.pk %}">View Friend Suggestions</a>
+    <br><br><hr><br>
+    
     <a class="status-button" href="{% url 'create_status' profile.pk %}">Create Status Message</a>
     {% if profile.get_statusmessages %}
         <h2>Status Messages</h2>

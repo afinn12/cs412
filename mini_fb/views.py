@@ -3,8 +3,9 @@
 # Define the views for the mini_fb app:
 #from django.shortcuts import render
 from .models import Profile, Image
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import View, ListView, DetailView, CreateView
 from django.urls import reverse
+from django.shortcuts import redirect
 from typing import Any
 from .forms import * ## import the forms (e.g., CreateStatusMessageForm)
 from django.views.generic.edit import UpdateView ## add UpdateView to list of imports
@@ -161,3 +162,32 @@ class UpdateStatusView(UpdateView):
             image.save()  
 
         return super().form_valid(form)
+    
+
+class CreateFriendView(View):
+    def dispatch(self, request, *args, **kwargs):
+        profile_pk = kwargs.get('pk')
+        other_profile_pk = kwargs.get('other_pk')
+        
+        try:
+            profile = Profile.objects.get(pk=profile_pk)
+            other_profile = Profile.objects.get(pk=other_profile_pk)
+        except Profile.DoesNotExist:
+            raise ValueError("Profile does not exist")
+
+        # Call the add_friend method
+        profile.add_friend(other_profile)
+        
+        # Redirect back to the profile page
+        return redirect('profile', pk=profile_pk)
+    
+
+class ShowFriendSuggestionsView(DetailView):
+    model = Profile
+    template_name = 'mini_fb/friend_suggestions.html'
+    context_object_name = 'profile'  # This is the context variable you'll use in the template
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['friend_suggestions'] = self.object.get_friend_suggestions()  # Add friend suggestions to context
+        return context

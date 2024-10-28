@@ -1,0 +1,28 @@
+<!-- templates/show_all_profiles.html -->
+<!-- mini_fb/templates/mini_fb/show_all_profiles.html -->
+
+{% extends 'mini_fb/base.html' %}
+{% block content %}
+
+<!-- show the Friend Suggestions -->
+<div class="box">
+    <h2>People {{profile.first}} {{ profile.last}} may know...</h2>
+
+    {% if profile.get_friend_suggestions %}
+    <div class="box2" style="display: flex; flex-wrap: wrap">
+        {% for f in profile.get_friend_suggestions %}
+            <div class="box3">
+                <a href="{% url 'profile' f.pk %}" style="text-decoration: none; display: flex; flex-direction: column;">
+                    <img class="post-img" src="{{ f.image_url }}" alt="{{ f.first }}'s Proflie Picture">
+                    <strong style="color: black;">{{ f.first }} {{ f.last }}</strong> 
+                </a> 
+                <a class="status-button" style="display: inline-block; margin-top: 10px; " href="{% url 'add_friend' profile.pk f.pk %}">Add Friend</a>
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <h2>No Suggestions</h2>
+    {% endif %}
+    <a class="status-button" style="display: inline-block; margin-top: 10px; " href="{% url 'profile' profile.pk %}">Back to {{profile.first}}'s Profile</a>
+</div>
+{% endblock %}
