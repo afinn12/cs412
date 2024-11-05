@@ -17,6 +17,9 @@
     <table>
         <!-- display form as a table -->
         {{form.as_table}}
+        {% if not request.user.is_authenticated %}
+            {{ user_form.as_p }}
+        {% endif %}
         <tr>
             <td></td>
             <td>

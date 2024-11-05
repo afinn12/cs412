@@ -16,7 +16,7 @@
                     <img class="post-img" src="{{ f.image_url }}" alt="{{ f.first }}'s Proflie Picture">
                     <strong style="color: black;">{{ f.first }} {{ f.last }}</strong> 
                 </a> 
-                <a class="status-button" style="display: inline-block; margin-top: 10px; " href="{% url 'add_friend' profile.pk f.pk %}">Add Friend</a>
+                <a class="status-button" style="display: inline-block; margin-top: 10px; " href="{% url 'add_friend' f.pk %}">Add Friend</a>
             </div>
         {% endfor %}
     </div>

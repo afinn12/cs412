@@ -1,10 +1,14 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User 
 
 # Create your models here.
 
 class Profile(models.Model):
     '''Encapsulate the idea of a Facebook Profile'''
+
+    # every Profile has one User:
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     # data attributes of a Profile:
     first = models.TextField(blank=False)
@@ -79,7 +83,7 @@ class Profile(models.Model):
         own = StatusMessage.objects.filter(profile=self)
 
         # Get the friends of this profile
-        friends = self.get_friends()  # Assuming this returns a list of friend Profile instances
+        friends = self.get_friends() 
 
         # Get status messages from friends
         other = StatusMessage.objects.filter(profile__in=friends)

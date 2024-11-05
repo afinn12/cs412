@@ -7,11 +7,16 @@
             <img class="profile-img" src="{{profile.image_url}}" alt="{{article.image_url}}">
             
             <div> 
-                <a class="status-button" style="display: inline-block; margin-top: 10px; " href="{% url 'news_feed' profile.pk %}">{{profile.first}}'s News Feed</a>
+                {% if request.user.is_authenticated and request.user == profile.user %}
+                    <a class="status-button" style="display: inline-block; margin-top: 10px; " href="{% url 'news_feed'%}">{{profile.first}}'s News Feed</a>
+                {% endif %}
+
                 <h2>{{profile.first}} {{profile.last}}</h2>
                 <h3>{{profile.city}}</h3>
                 <h3>{{profile.email}}</h3>  
-                <a class="status-button" style="display: inline-block; margin-top: 10px; " href="{% url 'update_profile' profile.pk %}">Update Profile</a>
+                {% if request.user.is_authenticated and request.user == profile.user %}
+                    <a class="status-button" style="display: inline-block; margin-top: 10px; " href="{% url 'update_profile'%}">Update Profile</a>
+                {% endif %}
             </div> 
 </main>
 
@@ -34,10 +39,15 @@
     {% endif %}
     <br>
 
-    <a class="status-button" href="{% url 'friend_suggestions' profile.pk %}">View Friend Suggestions</a>
+    {% if request.user.is_authenticated and request.user == profile.user %}
+        <a class="status-button" href="{% url 'friend_suggestions' %}">View Friend Suggestions</a>
+    {% endif %}
     <br><br><hr><br>
     
-    <a class="status-button" href="{% url 'create_status' profile.pk %}">Create Status Message</a>
+    {% if request.user.is_authenticated and request.user == profile.user %}
+        <a class="status-button" href="{% url 'create_status' %}">Create Status Message</a>
+    {% endif %}
+   
     {% if profile.get_statusmessages %}
         <h2>Status Messages</h2>
         <!-- call the get_statusmessages method on the article object -->
@@ -52,10 +62,12 @@
                 <strong> {{s.profile.first}} {{s.profile.last}} at {{s.timestamp}}</strong>
                 <p>{{s.message}}</p>
             </div>
-            <div style="margin: 20px;">
-                <a class="status-button" style="font-size: 12px;" href="{% url 'update_status' s.pk %}">Update</a> 
-                <a class="status-button" style="font-size: 12px;" href="{% url 'delete_status' s.pk %}">Delete</a> 
-            </div>
+            {% if request.user.is_authenticated and request.user == profile.user %}
+                <div style="margin: 20px;">
+                    <a class="status-button" style="font-size: 12px;" href="{% url 'update_status' s.pk %}">Update</a> 
+                    <a class="status-button" style="font-size: 12px;" href="{% url 'delete_status' s.pk %}">Delete</a> 
+                </div>
+            {% endif %}
         </div>
         {% endfor %}
     {% else %}
