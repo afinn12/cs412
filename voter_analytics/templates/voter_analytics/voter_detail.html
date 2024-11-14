@@ -1,0 +1,27 @@
+<!-- voter_analytics/templates/voter_analytics/search.html  -->
+
+<h1>Voter Details</h1>
+
+<p><strong>Name:</strong> {{ voter.first_name }} {{ voter.last_name }}</p>
+<p><strong>Date of Birth:</strong> {{ voter.dob }}</p>
+<p><strong>Registration Date:</strong> {{ voter.dor }}</p>
+<p><strong>Address:</strong> {{ voter.street_number }} {{ voter.street_name }}
+    {% if voter.apartment %} Apt. {{ voter.apartment }}{% endif %}
+</p>
+<p><strong>ZIP Code:</strong> {{ voter.zip }}</p>
+<p><strong>Party Affiliation:</strong> {{ voter.party }}</p>
+<p><strong>Precinct:</strong> {{ voter.precinct }}</p>
+
+<h3>Voting History</h3>
+<ul>
+    <li>2020 State Election: {{ voter.v20state }}</li>
+    <li>2021 Town Election: {{ voter.v21town }}</li>
+    <li>2021 Primary Election: {{ voter.v21primary }}</li>
+    <li>2022 General Election: {{ voter.v22general }}</li>
+    <li>2023 Town Election: {{ voter.v23town }}</li>
+</ul>
+
+<h3>Contact</h3>
+<p><a href="https://www.google.com/maps/search/?api=1&query={{ voter.street_number }}+{{ voter.street_name }}{% if voter.apartment %}+Apt+{{ voter.apartment }}{% endif %}+{{ voter.zip }}" target="_blank">
+    View on Google Maps
+</a></p>

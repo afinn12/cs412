@@ -1,4 +1,6 @@
-<!-- templates/marathon_analytics/results.html -->
+<!-- voter_analytics/templates/voter_analytics/results.html  -->
+
+
 {% extends 'voter_analytics/base.html' %}
 {% block content %}
 <div class="container">
@@ -8,28 +10,31 @@
             {% include 'voter_analytics/search.html' %}
         </div>    
     </div>
-    <h1>Voter Records</h1>
+    <h1>Voters</h1>
     <div class="row">
         <table>
             <tr>
                 <th>Voter ID</th>
                 <th>Name</th>
+                <th>Street Address</th>
                 <th>Date of Birth</th>
-                <th>Registration Date</th>
-                <th>Precinct</th>
                 <th>Party</th>
+                <th>Precinct</th>
                 <th>Voter Score</th>
             </tr>
     
-            {% for r in results %}
+            {% for r in voters %}
             <tr>
                 <td>{{ r.id }}</td>
                 <td>{{ r.first_name }} {{ r.last_name }}</td>
+                <td>{{ r.street_number}} {{ r.street_name}} 
+                    {% if r.apartment %} <br> Apt. {{ r.apartment }}{% endif %}                
+                </td>
                 <td>{{ r.dob }}</td>
-                <td>{{ r.dor }}</td>
-                <td>{{ r.precinct }}</td>
                 <td>{{ r.party }}</td>
+                <td>{{ r.precinct }}</td>
                 <td>{{ r.voter_score }}</td>
+                <td><a href="{% url 'voter_details' r.pk %}">More Details</a></td>
             </tr>
             {% endfor %}
     

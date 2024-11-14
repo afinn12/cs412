@@ -1,0 +1,88 @@
+<!-- voter_analytics/templates/voter_analytics/search.html  -->
+
+<h3>Search</h3>
+<form action="{% url 'voters' %}">
+    <table>
+        <!-- Party Affiliation Dropdown -->
+        <tr>
+            <th>Party Affiliation</th>
+            <td>
+                <select name="party">
+                    <option value="">Any</option>
+                    <option value="D">Democratic</option>
+                    <option value="R">Republican</option>
+                    <option value="CC">Constitution Party</option>
+                    <option value="L">Libertarian Party</option>
+                    <option value="T">Tea Party</option>
+                    <option value="O">Other</option>
+                    <option value="G">Green Party</option>
+                    <option value="J">Independent Party</option>
+                    <option value="Q">Reform Party</option>
+                    <option value="FF">Freedom Party</option>
+                </select>                
+            </td>
+        </tr>
+
+        <!-- Minimum Date of Birth Dropdown -->
+        <tr>
+            <th>Minimum Date of Birth</th>
+            <td>
+                <select name="min_dob">
+                    <option value="">Any</option>
+                    {% for year in years %}
+                        <option value="{{ year }}">{{ year }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+
+        <!-- Maximum Date of Birth Dropdown -->
+        <tr>
+            <th>Maximum Date of Birth</th>
+            <td>
+                <select name="max_dob">
+                    <option value="">Any</option>
+                    {% for year in years %}
+                        <option value="{{ year }}">{{ year }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+
+        <!-- Voter Score Dropdown -->
+        <tr>
+            <th>Voter Score</th>
+            <td>
+                <select name="voter_score">
+                    <option value="">Any</option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </td>
+        </tr>
+
+        <!-- Voting History Checkboxes -->
+        <tr>
+            <th>Voted in:</th>
+            <td>
+                <input type="checkbox" name="v20state" value="true"> 2020 State<br>
+                <input type="checkbox" name="v21town" value="true"> 2021 Town<br>
+                <input type="checkbox" name="v21primary" value="true"> 2021 Primary<br>
+                <input type="checkbox" name="v22general" value="true"> 2022 General<br>
+                <input type="checkbox" name="v23town" value="true"> 2023 Town
+            </td>
+        </tr>
+
+        <!-- Submit Button -->
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="Search">
+            </td>
+        </tr>
+    </table>
+</form>

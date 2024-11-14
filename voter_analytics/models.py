@@ -1,7 +1,7 @@
 # blog/models.py
 # Definte the data objects for our application
 from django.db import models
-from tqdm import tqdm
+# from tqdm import tqdm
 
 # Create your models here.
 class Voter(models.Model):
@@ -12,8 +12,8 @@ class Voter(models.Model):
     id = models.TextField(primary_key=True)
     first_name = models.TextField()
     last_name = models.TextField()
-    dob = models.TextField()
-    dor = models.TextField()
+    dob = models.DateField()
+    dor = models.DateField()
     precinct = models.TextField()
     party = models.TextField()
     voter_score = models.IntegerField()
@@ -37,7 +37,19 @@ class Voter(models.Model):
 
     def __str__(self):
         '''Return a string representation of this model instance.'''
-        return f'{self.first_name} {self.last_name} (Party: {self.party}, {self.precinct}), {self.dor}'
+        # return f'{self.first_name} {self.last_name} (Party: {self.party}, {self.precinct}), {self.dor}'
+        participation = [
+            '1' if self.v20state else '0',
+            '1' if self.v21town else '0',
+            '1' if self.v21primary else '0',
+            '1' if self.v22general else '0',
+            '1' if self.v23town else '0'
+        ]
+        participation = ''.join(participation)
+
+        
+        return (f'{self.first_name} {self.last_name}, {self.dob.year} ({self.party.strip()}, {participation})')
+
         # return (f'first_name: {self.first_name} \n'
         #     f'last_name: {self.last_name}\n'
         #     f'dob: {self.dob} \n'
@@ -69,7 +81,8 @@ def load_data():
 
     total_lines = sum(1 for line in open(filename)) - 1  
 
-    for line in tqdm(f, total=total_lines, desc="Loading Voters"):
+    # for line in tqdm(f, total=total_lines, desc="Loading Voters"):
+    for line in f:
         try:
             fields = line.split(',')  # Create a list of fields
             # print(f"Attempting to insert: {fields}")
