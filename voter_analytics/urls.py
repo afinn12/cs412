@@ -7,6 +7,6 @@ from .views import *
 urlpatterns = [
     path('', VoterListView.as_view(), name="voter_home"),
     path('voters', VoterListView.as_view(), name="voters"),
-    path('voter_details/<str:pk>/', VoterDetailView.as_view(), name='voter_details'),
+    path('voter/<str:pk>/', VoterDetailView.as_view(), name='voter_details'),
     path('graphs/', GraphsView.as_view(), name='graphs'),
 ]
