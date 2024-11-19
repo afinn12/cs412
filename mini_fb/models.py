@@ -21,6 +21,13 @@ class Profile(models.Model):
         '''Return a string representation of this Profile object.'''
         return f'{self.first} {self.last}'
     
+    def get_user(self):
+        '''Return a list of possible friends for this profile.'''
+        # Get all friends of the current profile
+        user = User.objects.filter(user=self)
+
+        return user
+    
     def get_statusmessages(self):
         '''Return all of the statusmessages about this profile.'''
         statusmessages = StatusMessage.objects.filter(profile=self)

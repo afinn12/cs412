@@ -1,41 +1,56 @@
-<!-- mini_fb/templates/mini_fb/create_profile_form.html -->
-
-{% extends 'mini_fb/base.html'  %}
+{% extends 'mini_fb/base.html' %}
 
 {% block content %}
-
 <div class="box">
-    <h2>Create a Profile</h2>
+    <h2>Create Account</h2>
 
     <form method="POST">
-    {% csrf_token %}
-    <!-- simple way to display the form, all one line -->
-    <!-- {{form}} -->
+        {% csrf_token %}
+        <table style="border: 2px solid black; border-radius: 20px;">
+            <!-- Display the UserCreationForm fields only if not authenticated -->
+            {% if not request.user.is_authenticated %}
+                <tr colspan="2">
+                    <td>
+                        <h3 style="padding: 20px;">User Information</h3>
+                    </td>
+                </tr>
+                {% for field in user_form %}
+                <tr>
+                    <td style="vertical-align: top; text-align: center; font-weight: bold;">
+                        {{ field.label_tag }}
+                    </td>
+                    <td>
+                        {{ field }}
+                        <small style="color: grey;">{{ field.help_text }}</small>
+                        {% if field.errors %}
+                            <div style="color: red;">{{ field.errors }}</div>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            {% endif %}
 
-    <!-- each field on its own line -->
-    <!-- {{form.as_p}} -->
-    <table>
-        <!-- display form as a table -->
-        {{form.as_table}}
-        {% if not request.user.is_authenticated %}
-            {{ user_form.as_p }}
-        {% endif %}
-        <tr>
-            <td></td>
-            <td>
-            <div class="delete-button" style="margin-left: -20px;">   
-                <input class="submit" type="submit" name="submit" value="Create Profile">
-                </form>
+            <tr>
+                <td>
+                    <h3 style="padding: 20px;">Profile Information</h3>
+                </td>
+            </tr>
+            {{ form.as_table }}
 
-                <form action="{% url 'show_all_profiles' %}">
-                    <input class="cancel" style="margin-right: 50px;" type="submit" name="Cancel" value="Cancel">
-                </form>
-            </div>
-            </td>
-        </tr>
-    </table>
+            <tr>
+                <td></td>
+                <td>
+                    <div class="delete-button">   
+                        <input class="submit" style="margin-left: 60px;" type="submit" name="submit" value="Create Profile">
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <!-- Cancel button placed outside of form -->
+    <form action="{% url 'show_all_profiles' %}">
+        <input class="cancel" style="margin-left: 320px;" type="submit" value="Cancel">
+    </form>
 </div>
-
-
-
 {% endblock %}

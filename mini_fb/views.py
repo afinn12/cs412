@@ -27,6 +27,8 @@ class ShowAllProfiles(ListView):
         '''add this method to show/debug logged in user'''
         print(f"Logged in user: request.user={request.user}")
         print(f"Logged in user: request.user.is_authenticated={request.user.is_authenticated}")
+        # print(f"Logged in user: request.user.profile={hasattr(request.user, 'Profile')}")
+
         return super().dispatch(request)
 
 
@@ -121,20 +123,23 @@ class CreateProfileView(CreateView):
     def form_valid(self, form):
         '''This method is called after the form is validated, 
         before saving data to the database.'''
+
+        # If already have a user account, create a profile
+        if self.request.user.is_authenticated:  
+            form.instance.user = self.request.user 
+            return super().form_valid(form)
+        
+
         # Reconstruct the UserCreationForm from the request data
         user_form = UserCreationForm(self.request.POST)
         
-        if user_form.is_valid() and form.is_valid():  # Validate both forms
-            # Save the new user and attach to the profile
+        if user_form.is_valid() and form.is_valid(): 
+            
             user_instance = user_form.save()
-            form.instance.user = user_instance  # Attach the user to the profile
-            # Log in the user
+            form.instance.user = user_instance  
             login(self.request, user_instance)
-
-            # Proceed with saving the profile
             return super().form_valid(form)
 
-        # If either form is invalid, re-render the forms with error messages
         return self.form_invalid(form)
 
 
