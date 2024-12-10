@@ -1,0 +1,101 @@
+<!-- templates/show_recipe.html -->
+<!-- mini_fb/templates/mini_fb/show_recipe.html -->
+<!-- show one userrecipe -->
+
+
+{% extends 'recipe/base.html' %}
+{% block content %}
+
+
+<!-- show the Friends and Recipes -->
+<div class="box" style="padding: 10px;">
+    <div class="box2" style="padding: 10px;">
+        {% if recipe %}
+            <!-- call the get_statusmessages method on the article object -->
+            <!-- {{article.get_statusmessages}} -->
+                <div class="box3">
+                        <h1 style="text-align: center; color: rgb(80, 0, 0); margin-top: 0;">{{recipe.title}}</h1>
+                    {% for img in recipe.get_images %}
+                    <img class="post-img" src='{{img.image_file.url}}' alt='{{img.image_file.url}}'>
+                    {% endfor %}
+
+                    <h2 style="color: black;">
+                        <span style="font-size: 20px;"> by 
+                           <a href="{% url 'account' recipe.author.pk %}"> {{recipe.author}}</a>
+                             at {{recipe.timestamp}}</span>
+                    </h2><br>
+                    <div>
+                        {% if request.user.is_authenticated and user_account == recipe.author %}    
+                                               
+                        <p style="margin-top: -20px; font-weight: 800;">
+                            <a href="{% url 'user_likes' recipe.pk %}" style="color">Total Likes: {{recipe.get_likes|length}}
+                            </a> 
+                        </p><br>
+                        {% else %}
+                            <p style="margin-top: -20px; font-weight: 800;">Total Likes: {{recipe.get_likes|length}}</p><br>
+
+                        {% endif %}
+                        <p style="margin-top: -40px; font-weight: 800;">Total Saves: {{recipe.get_cookbooks|length}}</p>    
+                    </div>
+
+                    <div style="display: flex; justify-content: flex-end;">
+
+                        <a href="{% url 'add_user_cookbook' recipe.pk %}" 
+                        style="color: black; margin-right: 10px; font-weight: 900; font-size: 50px;"
+                        onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                        +</a>
+                        {% if request.user.is_authenticated and user_account != recipe.author %}     
+                            {% if recipe in user_account.get_userlikes %}
+                                    <a href="{% url 'remove_userlike' recipe.pk %}?next={{ request.path }}" style="color:red; font-size: 50px; margin-left: 20px;"
+                                    onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                                        &#x2764;
+                                    </a>
+                            {% else %}
+                                    <a href="{% url 'add_userlike' recipe.pk %}?next={{ request.path }}" style="color: black;font-size: 50px;"
+                                    onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                                        &#x2764;
+                                    </a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+
+                    <div class="box4">
+                        <h3 style="color: black;">Description:</h2>
+                        {% if recipe.description %}
+                            <p>{{recipe.description}}</p>
+                        {% else %}
+                            <p>No description available.</p>
+                        {% endif %}
+
+                        <h3 style="color: black;">Ingredients:</h2>
+                            {% if recipe.ingredients %}
+                            <ul style="margin-left: 20px; ">
+                                {% for ingredient in recipe.ingredients.splitlines %}
+                                    {% if ingredient.strip %}
+                                        <li style="list-style-type: disc;">{{ ingredient.strip }}</li>
+                                    {% else %}
+                                        <br>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                            {% else %}
+                                <p>No ingredients available.</p>
+                            {% endif %}
+
+                        <h3 style="color: black;">Instructions:</h2>
+                        <p>{{recipe.instructions}}</p>
+                    </div>
+                   
+                </div>
+                {% if request.user.is_authenticated and request.user == recipe.author.user %}
+                    <div style="margin: 20px;">
+                        <a class="status-button" style="font-size: 12px;" href="{% url 'update_recipe' recipe.pk %}">Update</a> 
+                        <a class="status-button" style="font-size: 12px;" href="{% url 'delete_recipe' recipe.pk %}">Delete</a> 
+                    </div>
+                {% endif %}
+        {% else %}
+            <h2>Oh No! Recipe Not Found &#x2639;</h2>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

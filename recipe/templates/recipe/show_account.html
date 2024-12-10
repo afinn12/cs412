@@ -1,0 +1,146 @@
+<!-- templates/show_account.html -->
+<!-- recipe/templates/recipe/show_account.html -->
+<!-- shows an account -->
+
+{% extends 'recipe/base.html' %}
+{% block content %}
+<div class="box">
+    <div style="display: flex; flex-direction: row; gap: 20px;">
+        <img class="account-img" src="{{account.image_url}}" alt="{{article.image_url}}">
+    
+        <div> 
+            <h1>{{account.first}} {{account.last}}</h1>
+            <div style="display: flex; flex-direction: row; column-gap: 100px; margin-top: -48px;">
+                <h3 style="font-weight: 500;">Number of Cookbooks: {{account.get_cookbooks|length }}</h3>   
+                <h3 style="font-weight: 500;">Number of Recipes: {{account.get_recipes|length }} </h3>
+                <!-- show how many recipes you've liked -->
+                {% if account != user_account %}
+                    <h3>Recipes Liked by You: {{ account_likes|length}}</h3>
+                {% else %}
+                    <h3>Total Likes: {{ user_account.get_userlikes|length}}</h3>
+
+                {% endif %}
+            </div>
+
+            <!-- show specific buttons based on authentication -->
+            <h3 style="margin-top: -4px;font-weight: 500;">{{account.dob}}</h3>
+            {% if request.user.is_authenticated and request.user == account.user %}
+                <h3>{{account.email}}</h3>  
+                <div>
+                    <a class="status-button" style="display: inline-block; " href="{% url 'update_account'%}">Update Acount</a><br><br>
+                    <a class="status-button" style="display: inline-block; " href="{% url 'all_cookbooks' account.pk %}">My Cookbooks</a>
+                    <a class="status-button" style="display: inline-block; " href="{% url 'likes' user_account.pk%}">My Likes</a>
+                </div>
+            {% else %}
+                {% if user_account not in account.get_friends %}
+                    <a class="status-button" style="display: inline-block; margin-top: 10px; " href="{% url 'recipe_add_friend' account.pk %}">Add Friend</a><br><br>
+                {% else %}
+                    <a class="status-button" style="display: inline-block; margin-top: 10px; " href="{% url 'recipe_remove_friend' account.pk %}">Remove Friend</a><br><br>
+                    <a class="status-button" style="display: inline-block; " href="{% url 'all_cookbooks' account.pk %}">{{account.first}}'s Cookbooks</a>
+                {% endif %}
+                <a class="status-button" style="display: inline-block;" href="{% url 'likes' account.pk%}">{{account.first}}'s Likes</a>
+            {% endif %}
+        </div> 
+    </div>
+</div>
+
+<!-- show the Friends and Recipes -->
+<div class="box">
+    <div class="box2">
+        <!-- list recipes -->
+        {% if request.user.is_authenticated and request.user == account.user %}
+            <div style="display: flex; flex-direction: column; align-items:end; margin-bottom: -90px;">
+                <a class="status-button" href="{% url 'create_recipe' %}">Create Recipe</a>
+            </div>
+        {% endif %}
+
+        {% if account.get_recipes %}
+            
+            <h1>Recipes</h1>
+            
+            {% for r in account.get_recipes %}
+            <a href="{% url 'recipe' r.pk %}" style="text-decoration: none; display: flex; flex-direction: column; text-align: center;">
+                <div class="box3" style="width: 80%; margin: 20 auto;">
+                {% for img in r.get_images %}
+                    <img class="post-img" src='{{img.image_file.url}}' alt='{{img.image_file.url}}'>
+                {% endfor %}
+                <h2 style="color: black;">{{r.title}} </h2>
+                <p style="text-align: center;">{{r.description}}</p>
+
+                <div>
+                    <br>
+                    {% if request.user.is_authenticated and user_account == r.author %}    
+                        <p style="margin-top: -20px; font-weight: 800;">
+                            <a href="{% url 'user_likes' r.pk %}" style="color">Total Likes: {{r.get_likes|length}}
+                            </a> 
+                        </p>
+                    {% else %}
+                        <p style="margin-top: -20px; font-weight: 800;">Total Likes: {{r.get_likes|length}}</p>
+                    {% endif %}
+                    <br>
+                    <p style="margin-top: -40px; font-weight: 800; text-align: center;">Total Saves: {{r.get_cookbooks|length}}</p>
+                </div>
+                
+       
+                <p style="text-align: center;"> {{r.timestamp}}</p>
+                {% if request.user.is_authenticated and request.user == account.user %}
+                    <div style="margin: 20px;">
+                        <a class="status-button" style="font-size: 12px;" href="{% url 'update_recipe' r.pk %}">Update</a> 
+                        <a class="status-button" style="font-size: 12px;" href="{% url 'delete_recipe' r.pk %}">Delete</a> 
+                    </div>
+                {% endif %}
+                {% if request.user.is_authenticated and user_account != r.author %}
+                <div style="display: flex; justify-content: flex-end;">
+
+                    <a href="{% url 'add_user_cookbook' r.pk %}" 
+                    style="color: black; margin-right: 10px; font-weight: 900; font-size: 30px;"
+                    onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                    +</a>
+                    
+                    {% if r in user_account.get_userlikes %}
+                            <a href="{% url 'remove_userlike' r.pk %}?next={{ request.path }}" style="color:red; font-size: 30px; margin-left: 20px;"
+                            onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                                &#x2764;
+                            </a>
+                    {% else %}
+                            <a href="{% url 'add_userlike' r.pk %}?next={{ request.path }}" style="color: black;font-size: 30px;"
+                            onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                                &#x2764;
+                            </a>
+                    {% endif %}  
+                </div>
+            {% endif %}
+            </div>
+        </a>
+        {% endfor %}
+        {% else %}
+            <h2>No Recipes Made Yet &#x2639;</h2>
+        {% endif %}
+    </div>
+    
+    <!-- list friends -->
+    <div class="box2">
+        {% if request.user.is_authenticated and request.user == account.user %}
+        <div style="display: flex; flex-direction: column; align-items:end; margin-bottom: -90px;">
+            <a class="status-button" href="{% url 'recipe_friend_suggestions' %}">View Friend Suggestions</a>
+        </div>
+        {% endif %}
+        {% if account.get_friends %}
+        <h1>Friends</h1>
+        <div class="box2" style="display: flex; flex-wrap: wrap; margin-left: -20px;">
+            {% for f in account.get_friends %}
+                <div class="box3">
+                    <a href="{% url 'account' f.pk %}" style="text-decoration: none; display: flex; flex-direction: column;">
+                        <img class="post-img" src="{{ f.image_url }}" alt="{{ f.first }}'s Profile Picture">
+                        <strong style="color: black;">{{ f.first }} {{ f.last }}</strong> 
+                    </a> 
+                </div>
+            {% endfor %}
+        </div>
+        {% else %}
+            <h2>No Friends Yet &#x2639;</h2>
+        {% endif %}
+    </div>
+   
+</div>
+{% endblock %}

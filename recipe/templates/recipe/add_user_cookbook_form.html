@@ -1,0 +1,49 @@
+<!-- recipe/templates/recipe/add_user_cookbook_form.html.html -->
+ <!-- This add a user recipe to a cookbook -->
+
+{% extends 'recipe/base.html' %}
+
+{% block content %}
+<div class="box" style="text-align: center;">
+    <h2>Which Cookbook would you like to add this recipe to?</h2>
+    <!-- show the recipe -->
+    <h3>Recipe:</h3>
+    <div>
+        <div class="box3" style="margin: 20px auto;">
+            {% for img in recipe.get_images %}
+                <img class="post-img" src='{{img.image_file.url}}' alt='{{img.image_file.url}}'>
+            {% endfor %}
+            <h4><span style="font-size: 20px;">{{recipe}}</span> 
+                <span style="font-weight: normal;">by</span> {{recipe.author}}
+            </h4>
+            <p style="text-align: center;">{{recipe.description}}</p>
+            <p>{{recipe.timestamp}}</p>
+        </div>
+
+        <!-- form to add to cookbook -->
+    
+        <form action="{% url 'add_user_cookbook' recipe.pk %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="recipe_id" value="{{ r.id }}">
+            <label for="add-{{recipe.pk}}">Add to Cookbook:</label>
+            <select name="cookbook" id="add-{{recipe.pk}}" multiple>
+                {% if user_cookbooks %}
+                    <option value="" disabled selected>Select a Cookbook</option>
+                    {% for cookbook in user_cookbooks %}
+                        <option value="{{ cookbook.id }}">{{ cookbook.name }}</option>
+                    {% endfor %}
+                {% else %}
+                    <option value="" disabled selected>No Cookbooks available</option>
+                {% endif %}
+                
+               
+            </select>
+            <button type="submit">Add</button>
+        </form>
+        <p style="text-align: center;">Hold down “Control”, or “Command” on a Mac, to select more than one.</p>
+    </div>
+   
+   
+</div>
+{% endblock %}
+

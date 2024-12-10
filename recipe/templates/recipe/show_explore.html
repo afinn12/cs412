@@ -1,0 +1,61 @@
+<!-- templates/show_all_dbrecipes.html -->
+<!-- recipe/templates/recipe/show_all_dbrecipes.html -->
+ 
+<!-- show all userrecipes -->
+
+{% extends 'recipe/base.html' %}
+{% block content %}
+<h2 style="margin-left: 70px;">Explore User Recipes</h2>
+<main class="grid-container">
+    {% for r in userrecipes %}
+    <article class="grid-item">
+        <a href="{% url 'recipe' r.pk %}" style="color:black">
+            {% if r.get_images %}
+                {% for img in r.get_images %}
+                    <img class="explore-img" src="{{ img.image_file.url }}" alt="Recipe Image">
+                {% endfor %}
+            {% endif %}
+            <h2 class="recipe-title">{{ r.title }}</h2>
+            <p class="recipe-description">{{ r.description }}</p>
+            <h3 class="recipe-author">by 
+                <a href="{% url 'account' r.author.pk %}">{{ r.author }}</a>
+            </h3>
+        </a> 
+        <br>
+        {% if request.user.is_authenticated and user_account == r.author %}    
+                                               
+        <p style="margin-top: -20px; font-weight: 800;">
+            <a href="{% url 'user_likes' r.pk %}">Total Likes: {{r.get_likes|length}}
+            </a> 
+        </p>
+        {% else %}
+            <p style="margin-top: -20px; font-weight: 800;">Total Likes: {{r.get_likes|length}}</p>
+
+        {% endif %}
+        <p style="margin-top: -40px; font-weight: 800;">Total Saves: {{r.get_cookbooks|length}}</p>
+
+        <div style="display: flex; justify-content: flex-end; margin-top: -50px;">
+            <a href="{% url 'add_user_cookbook' r.pk %}" 
+               style="color: black; margin-right: 10px; font-weight: 900;"
+               onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                +</a>
+            {% if request.user.is_authenticated and user_account != r.author %}
+                {% if r in user_account.get_userlikes %}
+                    <a href="{% url 'remove_userlike' r.pk %}?next={{ request.path }}" style="color:red"
+                    onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                        &#x2764;
+                    </a>
+                {% else %}
+                    <a href="{% url 'add_userlike' r.pk %}?next={{ request.path }}" style="color: black"
+                    onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                        &#x2764;
+                    </a>
+            {% endif %}
+        {% endif %}
+        </div>
+    </article>
+    {% endfor %}
+</main>
+
+
+{% endblock %}

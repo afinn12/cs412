@@ -1,0 +1,54 @@
+<!-- show all cookbooks for a given account -->
+{% extends 'recipe/base.html' %}
+{% block content %}
+
+
+<div class="box">
+{% if request.user == account.user %}
+    <h2>Your Cookbooks</h2>
+    <div style="display: flex; flex-direction: column; align-items:end;  margin-top: -65px;">
+        <a class="create" href="{% url 'create_cookbook' %}">Create Cookbook</a>
+    </div> <br>
+{% else %}
+    <h2>{{account.first}}'s Cookbooks</h2>
+    <div style="display: flex; flex-direction: column; align-items:end;  margin-top: -65px;">
+        <a class="status-button" href="{% url 'account' account.pk %}">Back to {{account.first}}'s Account</a>
+    </div> <br>
+{% endif %}
+
+
+<div class="box" style="background-color:#d9a4a4;">
+    
+    {% if account.get_cookbooks %}
+        <div class="grid-container">
+            {% for c in account.get_cookbooks %}
+                    <div class="grid-item" style="max-height: 140px;">
+                        <a href="{% url 'cookbook' c.pk %}">
+                            {% if request.user.is_authenticated and request.user != account.user %}
+                                <br>
+                            {% endif %}
+                            <span class="cookbook">{{c.name}}</span> <br> {{c}}
+                            {% if request.user.is_authenticated and request.user == account.user %}
+                            <div style="margin: 20px;">
+                                <a class="status-button" style="font-size: 12px;" href="{% url 'update_cookbook' c.pk %}">Update</a> 
+                                <a class="status-button" style="font-size: 12px;" href="{% url 'delete_cookbook' c.pk %}">Delete</a> 
+                            </div>
+                            {% endif %}
+                        </a>
+                    </div>
+            {% endfor %}
+        </div>
+        
+    {% else %}
+    <h2>No Cookbooks Made Yet &#x2639;</h2>
+
+    {% endif %}
+
+
+
+</div>
+
+</div>
+
+
+{% endblock %}

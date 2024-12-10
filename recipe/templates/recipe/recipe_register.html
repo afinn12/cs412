@@ -1,0 +1,21 @@
+<!-- recipe/templates/recipe/recipe_register.html -->
+
+{% extends 'recipe/base.html'  %}
+
+{% block content %}
+
+<div class="box">
+    <h2>Register for a new Account</h2>
+    <form method="POST">
+        {% csrf_token %}
+    
+        <table>
+        {{form.as_table}}
+        </table>
+    
+        <input type="submit" name="register" value="Register">
+    </form>
+</div>
+
+
+{% endblock %}

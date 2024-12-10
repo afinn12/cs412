@@ -1,0 +1,35 @@
+<!-- templates/show_all_accounts.html -->
+<!-- recipe/templates/recipe/show_all_accounts.html -->
+<!-- view that displays friend suggestions, based off of current friends -->
+
+{% extends 'recipe/base.html' %}
+{% block content %}
+
+<!-- show the Friend Suggestions -->
+<div class="box">
+    <h2>People you may know...</h2>
+    
+
+    {% if account.get_friend_suggestions %}
+    <div class="box2" style="display: flex; flex-wrap: wrap">
+        {% for f in account.get_friend_suggestions %}
+            <div class="box3">
+                <a href="{% url 'account' f.pk %}" style="text-decoration: none; display: flex; flex-direction: column;">
+                    <img class="post-img" src="{{ f.image_url }}" alt="{{ f.first }}'s Proflie Picture">
+                    <strong style="color: black;">{{ f.first }} {{ f.last }}</strong> 
+                </a> 
+                <a class="status-button" style="display: inline-block; margin-top: 10px; " href="{% url 'add_friend' f.pk %}">Add Friend</a>
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <h2>No Suggestions</h2>
+    {% endif %}
+    <!-- add a button to return to account -->
+    <div style="display: flex; flex-direction: column; align-items:center;">
+        <a class="status-button" href="{% url 'account' account.pk %}">
+            Back to {{account.first}}'s Account</a>
+    </div>
+
+</div>
+{% endblock %}

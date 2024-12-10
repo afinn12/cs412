@@ -1,0 +1,48 @@
+<!-- form to update your recipe -->
+{% extends 'recipe/base.html' %}
+
+{% block content %}
+<div class="box">
+    <h2>Update Recipe</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            {% for field in form %}
+            <tr>
+                <th>{{ field.label }}</th>
+                <td>{{ field }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <th>Images:</th>
+                <td>
+                    <div class="delete-container">
+                        {% for image in recipe.get_images %}
+                        <div>
+                            <img class="delete-img" src="{{ image.image_file.url }}" alt="Image" />
+                            <label>
+                                <input type="checkbox" name="delete_images" value="{{ image.pk }}"> Delete
+                            </label>
+                        </div>
+                        {% empty %}
+                        <p>No images uploaded.</p>
+                        {% endfor %}
+                    </div>
+                    <input type="file" name="files" multiple>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input class="submit" type="submit" name="update_status" value="Update Recipe!">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <form action="{% url 'account' recipe.pk %}" method="GET" style="display: inline;margin-left: 100px;">
+        <input class="cancel" type="submit" value="Cancel Update">
+    </form>
+</div>
+{% endblock %}

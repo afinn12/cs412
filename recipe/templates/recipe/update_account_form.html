@@ -1,0 +1,33 @@
+<!-- form to update your account -->
+
+{% extends 'recipe/base.html' %}
+
+{% block content %}
+
+<div class="box">
+    <h2>Update Profile</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {% for field in form %}
+            <tr>
+                <th>{{ field.label }}</th>
+                <td>{{ field }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td>
+                    <input class="submit" type="submit" name="update_account" value="Update Account!">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <form action="{% url 'account' account.pk %}" method="GET" style="display: inline; margin-left: 115px;">
+        <input class="cancel" type="submit" value="Cancel Update">
+    </form>
+</div>
+
+{% endblock %}

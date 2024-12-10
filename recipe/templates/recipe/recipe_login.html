@@ -1,0 +1,26 @@
+<!-- templates/recipe/templates/recipe_login.html -->
+{% extends 'recipe/base.html' %}
+{% block content %}
+<!-- This basic authentication form works.
+- need to set "next" to redirect to correct page.
+-->
+<div class="box">
+    <h1>Login</h1>
+
+    <form class="box2" method="post" action="{% url 'login' %}" >
+        {% csrf_token %}
+        {{form}}
+        <input type="hidden" name="next" value="{% url 'show_explore' %}">
+        <input type="submit" value="Login">
+    </form>
+        
+    <hr>
+    <p>
+        Not registered yet? Create a User <a href="{% url 'recipe_register' %}"> here</a>
+    </p>
+ 
+   
+
+</div>
+
+{% endblock %}

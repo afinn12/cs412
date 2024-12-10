@@ -1,0 +1,32 @@
+<!-- templates/show_all_accounts.html -->
+<!-- mini_fb/templates/mini_fb/show_all_accounts.html -->
+
+{% extends 'recipe/base.html' %}
+{% block content %}
+
+<h2 style="margin-left: 70px;">Showing All Accounts</h2>
+<main class="grid-container">
+    <!-- iterate through all the accounts and display them -->
+    {% for a in accounts %}
+    <article class="grid-item">    
+        <a href="{% url 'account' a.pk %}" style="text-decoration: none; color: black;"> 
+            {% if a.image_url %}
+                <img src="{{a.image_url}}" alt="{{a.image_url}}" class="explore-img">
+            {% else %}
+            <p style="margin: 125 auto;">
+                No Profile Picture
+            </p>
+            {% endif %}
+            <h2 style="margin-bottom: 0;">{{a.first}} {{a.last}}</h2>
+            <div >
+                <strong>{{a.dob}}</strong> <br><br>
+                <strong>Recipes: {{a.get_recipes|length}}</strong> 
+                <br>
+                <strong>Cookbooks: {{a.get_cookbooks|length }}</strong>
+            </div>
+        </a>
+    </article>
+    {% endfor %}
+</main>
+
+{% endblock %}

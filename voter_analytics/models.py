@@ -79,7 +79,7 @@ def load_data():
 
     f.readline() # read/discard the headers
 
-    total_lines = sum(1 for line in open(filename)) - 1  
+    # total_lines = sum(1 for line in open(filename)) - 1  
 
     # for line in tqdm(f, total=total_lines, desc="Loading Voters"):
     for line in f:

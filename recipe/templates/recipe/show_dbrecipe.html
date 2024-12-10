@@ -1,0 +1,93 @@
+<!-- templates/show_dbrecipe.html -->
+<!-- mini_fb/templates/mini_fb/show_dbrecipe.html -->
+<!-- show one dbrecipe -->
+
+{% extends 'recipe/base.html' %}
+{% block content %}
+
+
+<!-- show the Recipe -->
+<div class="box">
+        {% if recipe %}
+            <!-- call the get_statusmessages method on the article object -->
+            <!-- {{article.get_statusmessages}} -->
+            <div>
+                <div style="margin-left: 30px;">
+                </div>
+               
+                <div class="box3">
+                    
+                    
+                    <h1 style="text-align: center; color: rgb(80, 0, 0);">
+                        <a href="{{recipe.url}}" target="_blank" rel="noopener noreferrer">{{recipe.title}}</a><br>
+                            <span style="font-size: 20px;"> by {{recipe.author}}</span>
+                    </h1><br>
+                    <div>
+                        <p style="margin-top: -20px; font-weight: 800;">Total Likes: {{recipe.get_likes|length}}</p><br>
+                        <p style="margin-top: -40px; font-weight: 800;">Total Saves: {{recipe.get_cookbooks|length}}</p>    
+                    </div>
+         
+                    {% if request.user.is_authenticated %}
+                        <div style="display: flex; justify-content: flex-end;">
+                            <a href="{% url 'add_db_cookbook' recipe.pk %}" 
+                            style="color: black; margin-right: 10px; font-weight: 900; font-size: 50px;"
+                            onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                            +</a>
+                            {% if recipe in user_account.get_dblikes %}
+                                    <a href="{% url 'remove_dblike' recipe.pk %}" style="color:red; font-size: 50px;">
+                                        &#x2764;
+                                    </a>
+                            {% else %}
+                                    <a href="{% url 'add_dblike' recipe.pk %}" style="color: black;font-size: 50px;">
+                                        &#x2764;
+                                    </a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+
+                  
+                    <br>
+
+                    <div class="box4">
+                        <h3 style="color: black;">Description:</h2>
+                        {% if recipe.description %}
+                            <p>{{recipe.description}}</p>
+                        {% else %}
+                            <p>No description available.</p>
+                        {% endif %}
+
+                        <h3 style="color: black;">Ingredients:</h2>
+                        {% if recipe.ingredients %}
+                            {% for ingredient in recipe.ingredients.splitlines %}
+                                {% if ingredient.strip %}
+                                    <li style="list-style-type: disc;">{{ ingredient.strip }}</li>
+                                {% else %}
+                                    <br>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            No ingredients provided.
+                        {% endif %}
+                        
+                        <h3 style="color: black;">Instructions:</h2>
+                            {% if recipe.instructions %}
+                            <p>{{recipe.instructions}}</p>
+                        {% else %}
+                            <p>No instructions available.</p>
+                        {% endif %}
+
+                    </div>
+                   
+                </div>
+                {% if request.user.is_authenticated and request.user == recipe.author.user %}
+                    <div style="margin: 20px;">
+                        <a class="status-button" style="font-size: 12px;" href="{% url 'update_recipe' recipe.pk %}">Update</a> 
+                        <a class="status-button" style="font-size: 12px;" href="{% url 'delete_recipe' recipe.pk %}">Delete</a> 
+                    </div>
+                {% endif %}
+            </div>
+        {% else %}
+            <h2>Oh No! Recipe Not Found &#x2639;</h2>
+        {% endif %}
+</div>
+{% endblock %}

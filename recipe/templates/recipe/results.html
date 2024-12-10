@@ -1,0 +1,191 @@
+<!-- recipe/templates/recipe/results.html -->
+<!-- This displays the results of the search, using search.html -->
+
+{% extends 'recipe/base.html' %}
+{% block content %}
+<div class="container">
+
+    <!-- include the search form -->
+    <div class="row">
+        <div>
+            {% include 'recipe/search.html' %}
+        </div>    
+    </div>
+
+    <!-- display the results in a table -->
+    <div class="box">
+    <a href="{% url 'search' %}">
+        <h1 style="text-align: center;">Recipe Results</h1>
+    </a>
+    <div class="row">
+        <table class="search">
+            {% if recipes %}
+            
+            <tr>
+                <th style="width: 10vw;">Title</th>
+                <th style="width: 30vw;">Description</th>
+                <th style="width: 20vw;">Ingredients</th>
+                <th style="width: 10vw;">Author</th>
+                <th style="width: 50px;">Type</th>
+                <th style="width: 50px;">Actions</th>
+            </tr>
+            {% endif %}
+
+
+            {% for recipe in recipes %}
+            <!-- timestamp is used to indicate if a recipe is user or db, since only user recipes have this field -->
+            <tr>
+                <td>                    
+                    <h3 style="color: black;">
+                        <!-- link to website or userrecipe -->
+                    {% if recipe.timestamp %}
+                        <a href="{% url 'recipe' recipe.pk %}">
+                            {% for img in recipe.get_images %}
+                                <img class="post-img" src='{{img.image_file.url}}' alt='{{img.image_file.url}}'>
+                            {% endfor %}
+                        </a>
+                    {% else %}
+                        <a href="{{recipe.url}}" target="_blank" rel="noopener noreferrer">
+                            {{ recipe.title }}
+                        </a>
+                    {% endif %}
+
+                    </h3>
+                </td>
+                <td>
+                    {% if recipe.description %}
+                        {% if recipe.timestamp %}
+                        <a href="{% url 'recipe' recipe.pk %}">
+                            <h3>{{ recipe.title }}</h3>
+                            <br>
+                            <p style="text-align: center;">
+                                {{ recipe.description }}
+                            </p>
+                        </a>
+                    {% else %}
+                        <a href="{% url 'dbrecipe' recipe.pk %}">
+                            <h3>{{ recipe.title }}</h3>
+                            <br>
+                            <p style="text-align: center;">
+                                {{ recipe.description }}
+                            </p>
+                        </a>
+                    {% endif %}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td>
+                    {% if recipe.ingredients %}
+                    {% for ingredient in recipe.ingredients.splitlines %}
+                        {% if ingredient.strip %}
+                            <li style="list-style-type: disc;">{{ ingredient.strip }}</li>
+                        {% else %}
+                            <br>
+                        {% endif %}
+                    {% endfor %}
+                    {% else %}
+                        No ingredients provided.
+                    {% endif %}
+                </td>
+                <td>
+                    {% if recipe.author %}
+                        {% if recipe.author == user_account %}
+                            <a href="{% url 'account' user_account.pk %}">
+                                <h3 style="color: rgb(31, 160, 31);">Your Recipe</h3>
+                            </a>
+                        {% else %}
+                            {% if recipe.timestamp %}
+                                <h3 style="color: black;">
+                                    <a href="{% url 'account' recipe.author.pk %}">
+                                        {{ recipe.author }}
+                                    </a>
+                                </h3>
+                            {% else %}
+                                <h3 style="color: black;">{{ recipe.author }}</h3>
+                            {% endif %}
+                        {% endif %}
+                    {% else %}
+                        Unknown
+                    {% endif %}
+                </td>
+                <td>
+                    {% if recipe.timestamp %}
+                    <a href="{% url 'show_explore' %}">
+                        <h3 style="color: rgb(31, 160, 31);">User Recipe</h3>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'show_all_dbrecipes' %}">
+                        <h3>Database Recipe</h3>
+                    </a>
+                    {% endif %}
+                </td>
+                <td>
+                    
+                    {% if recipe.timestamp %}
+                        <a href="{% url 'recipe' recipe.pk %}">
+                            <h3 style="color: rgb(60, 60, 190);"
+                            onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                            View Instructions</h3>    
+                        </a> <hr>
+
+                        <a href="{% url 'add_user_cookbook' recipe.pk %}">
+                            <h3 
+                                style="color: rgb(60, 60, 190);"
+                                onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                                Add to Cookbook
+                            </h3>
+                        </a>
+                    {% else %}
+                    <a href="{% url 'dbrecipe' recipe.pk %}">
+                        <h3 style="color: rgb(60, 60, 190);"
+                        onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                        View Instructions</h3>    
+                    </a> <hr>
+
+                    <a href="{% url 'add_db_cookbook' recipe.pk %}">
+                        <h3 
+                            style="color: rgb(60, 60, 190);"
+                            onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                            Add to Cookbook
+                        </h3>
+                    </a>
+                    {% endif %}
+
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">No recipes found. Try adjusting your search filters.</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+    </div>
+
+   
+    <!-- toggle between pages with this menu -->
+    {% if is_paginated %}
+    <div class="box" style="text-align: center; width: fit-content;">
+
+        <ul class="pagination">
+                <li class="">
+                    <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                </li>
+            {% if page_obj.has_previous %}
+                <li>
+                    <span><a href="?page={{ page_obj.previous_page_number }}" class="page_nav">Previous</a></span>
+                
+                </li>
+            {% endif %}
+            {% if page_obj.has_next %}
+                <li >
+                    <span><a href="?page={{ page_obj.next_page_number }}" class="page_nav">Next</a></span>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,60 @@
+<!-- templates/friends_feed.html -->
+<!-- recipe/templates/recipe/friends_feed.html -->
+<!-- this view shows all user recipes from own Account and friends -->
+{% extends 'recipe/base.html' %}
+{% block content %}
+
+    <h2 style="margin-left: 70px;">Your Friends' Recipes</h2>
+    <main class="grid-container">
+            {% for recipe in friends_feed %}
+                <article class="grid-item">
+                    <a href="{% url 'recipe' recipe.pk %}" style="text-decoration: none; color:black">
+                        {% if recipe.get_images %}
+                            {% for img in recipe.get_images %}
+                                <img class="explore-img" src="{{ img.image_file.url }}" alt="Recipe Image">
+                            {% endfor %}
+                        {% endif %}
+                        <h2 class="recipe-title">{{ recipe.title }}</h2>
+                        <p class="recipe-description">{{ recipe.description }}</p>
+                        <h3 class="recipe-author">by 
+                            <a href="{% url 'account' recipe.author.pk %}">{{ recipe.author }}</a>
+                        </h3>
+                    </a>
+                    {% if request.user.is_authenticated and user_account == recipe.author %}    
+                                               
+                    <p style="margin-top: -20px; font-weight: 800;">
+                        <a href="{% url 'user_likes' recipe.pk %}" style="color">Total Likes: {{recipe.get_likes|length}}
+                        </a> 
+                    </p>
+                    {% else %}
+                        <p style="margin-top: -20px; font-weight: 800;">Total Likes: {{recipe.get_likes|length}}</p>
+                    {% endif %}
+                    <p style="margin-top: -40px; font-weight: 800;">Total Saves: {{recipe.get_cookbooks|length}}</p>
+                    <div style="display: flex; justify-content: flex-end; margin-top: -50px;">
+                        <a href="{% url 'add_user_cookbook' recipe.pk %}" 
+                           style="color: black; margin-right: 10px; font-weight: 900;"
+                           onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                            +</a>
+                    {% if request.user.is_authenticated and user_account != recipe.author %}
+                        {% if recipe in user_account.get_userlikes %}
+                            <a href="{% url 'remove_userlike' recipe.pk %}?next={{ request.path }}" style="color:red"
+                               onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                                &#x2764;
+                            </a>
+                        {% else %}
+                            <a href="{% url 'add_userlike' recipe.pk %}?next={{ request.path }}" style="color: black"
+                               onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                                &#x2764;
+                            </a>
+                        {% endif %}
+                    </div>
+            
+                    {% endif %}
+                    
+                </article>
+            {% empty %}
+                <p>No recipes available.</p>
+            {% endfor %}
+    </main>
+
+{% endblock %}

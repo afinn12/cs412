@@ -1,0 +1,119 @@
+{% extends 'recipe/base.html' %}
+{% block content %}
+<!-- this shows the user's liked recipes, db and user -->
+
+<div class="box">
+    {% if request.user == account.user %}
+        <h1>Your Likes</h1>
+    {% else %}
+        <h1>{{ account.first }}'s Likes</h1>
+    {% endif %}
+
+    <!-- button to return to account -->
+    <div style="display: flex; flex-direction: column; align-items:end; margin-top: -90px;">
+        <a class="status-button" href="{% url 'account' account.pk %}">Back to {{ account.first }}'s Account</a>
+    </div>
+    <br><hr><br>
+
+    <!-- all liked user recipes -->
+    <h2>User Recipes</h2>
+    <main class="grid-container">
+        {% if userlikes %}
+            {% for r in userlikes %}
+            <article class="grid-item">
+                <a href="{% url 'recipe' r.pk %}" style="color:black">
+                    {% if r.get_images %}
+                        {% for img in r.get_images %}
+                            <img class="explore-img" src="{{ img.image_file.url }}" alt="Recipe Image">
+                        {% endfor %}
+                    {% endif %}
+                    <h2 class="recipe-title">{{ r.title }}</h2>
+                    <p class="recipe-description">{{ r.description }}</p>
+                    <h3 class="recipe-author">by 
+                        <a href="{% url 'account' r.author.pk %}">{{ r.author }}</a>
+                    </h3>
+                </a> 
+                <br>
+                <p style="margin-top: -20px; font-weight: 800; text-align: center;">Total Likes: {{r.get_likes|length}}</p>
+                <p style="margin-top: -40px; font-weight: 800; text-align: center;">Total Saves: {{r.get_cookbooks|length}}</p>
+        
+        
+                <div style="display: flex; justify-content: flex-end; margin-top: -50px;">
+                    <a href="{% url 'add_user_cookbook' r.pk %}" 
+                       style="color: black; margin-right: 10px; font-weight: 900;"
+                       onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                        +</a>
+                    {% if request.user.is_authenticated and user_account != r.author %}
+                        {% if r in user_account.get_userlikes %}
+                            <a href="{% url 'remove_userlike' r.pk %}?next={{ request.path }}" style="color:red"
+                            onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                                &#x2764;
+                            </a>
+                        {% else %}
+                            <a href="{% url 'add_userlike' r.pk %}?next={{ request.path }}" style="color: black"
+                            onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                                &#x2764;
+                            </a>
+                    {% endif %}
+                {% endif %}
+                </div>
+            </article>
+            {% endfor %}
+        {% else %}
+            <p>No user recipes have been liked yet &#x2639;</p>
+        {% endif %}
+    </main>
+    <br><hr><br>
+
+    <!-- all liked db recipes -->
+
+    <h2>Database Recipes</h2>
+    <main class="grid-container">
+        {% if dblikes %}
+            {% for r in dblikes %}
+            <article class="grid-item">
+                <a href="{% url 'dbrecipe' r.pk %}">
+                        <h2 class="db-title">{{ r.title }}</h2>
+                        <h3>by {{r.author}}</h3>
+                        {% if r.description %}
+                            <p class="db-description">{{ r.description }}</p>
+                        {% else %}
+                            <p class="db-description">Click to read more!</p>
+                        {% endif %}
+                        
+                </a>
+                <br><br>
+                <p style="margin-top: -20px; font-weight: 800; text-align: center;">Total Likes: {{r.get_likes|length}}</p>
+                <p style="margin-top: -40px; font-weight: 800; text-align: center;">Total Saves: {{r.get_cookbooks|length}}</p>
+        
+                
+            {% if request.user.is_authenticated and user_account != r.author %}
+                <div style="display: flex; justify-content: flex-end;">
+        
+                <a href="{% url 'add_db_cookbook' r.pk %}" 
+                style="color: black; margin-right: 10px; font-weight: 900;"
+                onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                +</a>
+        
+                {% if r in user_account.get_dblikes %}
+                        <a href="{% url 'remove_dblike' r.pk %}?next={{ request.path }}" style="color:red"
+                        onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                            &#x2764;
+                        </a>
+                {% else %}
+                        <a href="{% url 'add_dblike' r.pk %}?next={{ request.path }}" style="color: black"
+                        onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                            &#x2764;
+                        </a>
+                {% endif %}
+                </div>
+            {% endif %}
+            </article>    
+            {% endfor %}
+        {% else %}
+            <p>No database recipes have been liked yet &#x2639;</p>
+        {% endif %}
+    </main>
+</div>
+
+{% endblock %}

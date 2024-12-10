@@ -1,0 +1,73 @@
+<!-- mini_fb/templates/mini_fb/create_profile_form.html -->
+<!-- form to create a user recipe -->
+
+{% extends 'recipe/base.html'  %}
+
+{% block content %}
+
+<div class="box">
+    <h2>Create a Recipe for {{account.first}} {{account.last}}</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!-- simple way to display the form, all one line -->
+    <!-- {{form}} -->
+
+    <!-- each field on its own line -->
+    <!-- {{form.as_p}} -->
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <th><label for="title_id">Title:</label></th>
+                <td>
+                    <input type="text" name="title" id="title_id" 
+                       placeholder="Enter recipe title...">
+                </td>
+            </tr>
+
+            <tr>
+                <th><label for="description_id">Description:</label></th>
+                <td>
+                    <textarea name="description" id="description_id" rows="7" cols="40" placeholder="Enter description..."></textarea>
+                </td>
+            </tr>
+            
+            <tr>
+                <th><label for="ingredients_id">Ingredients:</label></th>
+                <td>
+                    <textarea name="ingredients" id="ingredients_id" rows="7" cols="40" placeholder="Enter ingredients..."></textarea>
+                </td>
+            </tr>
+
+            <tr>
+                <th><label for="instructions_id">Instructions:</label></th>
+                <td>
+                    <textarea name="instructions" id="instructions_id" rows="7" cols="40" placeholder="Enter instructions..."></textarea>
+                </td>
+            </tr>
+            
+            <tr>
+                <th><label for="image_id">Upload Images:</label></th>
+                <td><input type="file" id="image_id" name="files" multiple />
+                </td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td>
+                    <div class="delete-button" style="margin-left: -20px;">   
+                        <input class="submit" type="submit" name="submit" value="Create Recipe">    
+                    </div> 
+                </td>
+            </tr>
+        </table>
+    </form>
+    <form action="{% url 'account' account.pk %}">
+        <input class="cancel" style="margin-left: 220px;" type="submit" name="Cancel" value="Cancel">
+    </form>
+</div>
+
+
+
+{% endblock %}

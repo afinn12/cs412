@@ -1,0 +1,43 @@
+<!-- templates/show_recipe.html -->
+<!-- mini_fb/templates/mini_fb/show_recipe.html -->
+ 
+<!-- show all likes (the accounts) for a given recipe -->
+
+{% extends 'recipe/base.html' %}
+{% block content %}
+
+
+<div class="box" style="padding: 10px;">
+    <div class="box2" style="padding: 10px;">
+        
+        <h1 style="text-align: center;">{{ user_recipe.title }}</h1>
+
+        {% if accounts %}
+        <h2 style="text-align: center;">People that like Your Recipe:</h2>
+        <div class="box4" style="margin: 0 auto;">
+            <ul style="display: flex; flex-direction: row; justify-content: center;">
+                    {% for account in accounts %}
+                    <a href="{% url 'account' account.pk %}">
+                        <div class="box3" style="display: flex; flex-direction: row; justify-content: center;">
+                            <li style="margin: 10px;">
+                                    <img class="post-img" src="{{account.image_url}}" alt="{{article.image_url}}">
+                                    <h2 style="color: white; text-align: center;">
+                                        {{ account.first }} {{ account.last }}
+                                    </h2>
+                            </li>
+                        </div> 
+                    </a>
+                    {% endfor %}
+            </ul>
+        </div>
+        {% else %}
+        <h2 style="text-align: center;">No users have liked this recipe yet &#x2639;</h2>
+        {% endif %}
+        <br>
+        <div style="display: flex; flex-direction: row; justify-content: center;">
+            <a class="create" href="{% url 'recipe' pk=user_recipe.pk %}">Back to Recipe</a>
+        </div>
+    
+    </div>
+</div>
+{% endblock %}
