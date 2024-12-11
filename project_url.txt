@@ -1,0 +1,1 @@
+https://safe-oasis-51358-0ea2552fe59d.herokuapp.com/recipe/show_all_dbrecipes
