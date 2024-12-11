@@ -212,7 +212,7 @@ class ShowUserRecipeView(LoginRequiredMixin, DetailView):
         return reverse('recipe_login') 
 
 # Show the details of a database recipe
-class ShowDBRecipeView(DetailView):
+class ShowDBRecipeView(LoginRequiredMixin, DetailView):
     '''Display one Account selected by PK'''
     model = DBRecipe # the model to display
     template_name = "recipe/show_dbrecipe.html"
@@ -224,6 +224,11 @@ class ShowDBRecipeView(DetailView):
         context['user_account'] =  Account.objects.get(user=self.request.user)
 
         return context
+    
+    def get_login_url(self) -> str:
+        '''return the URL required for login'''
+        return reverse('recipe_login') 
+
 
 # Allows the user to create recipes
 class CreateRecipeView(LoginRequiredMixin, CreateView):
