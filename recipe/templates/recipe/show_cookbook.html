@@ -46,31 +46,30 @@
                 {% endif %}
                 <p style="margin-top: -40px; font-weight: 800;text-align: center;">Total Saves: {{r.get_cookbooks|length}}</p>
 
-                <div style="display: flex; justify-content: flex-end; margin-top: -50px;">
-                    <form action="{% url 'remove_user_cookbook' r.pk %}" method="POST" style="display: inline;">
-                        {% csrf_token %}
-                        <input type="hidden" name="cookbook" value="{{ cookbook.pk }}">
-                        <button type="submit" style="color: black; margin-right: 10px; margin-top: -20px; font-weight: 500; font-size: 40px;
-                        border: none; background: none;"
-                        onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
-                            -
-                        </button>
-                    </form>
-                    
-
-                {% if request.user.is_authenticated and user_account != r.author %}
-                    {% if r in user_account.get_userlikes %}
-                        <a href="{% url 'remove_userlike' r.pk %}" style="color:red"
-                        onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
-                            &#x2764;
-                        </a>
-                    {% else %}
-                        <a href="{% url 'add_userlike' r.pk %}" style="color: black"
-                        onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
-                            &#x2764;
-                        </a>
-                    {% endif %}
-                </div>
+                
+                {% if request.user.is_authenticated and request.user == account.user %}
+                    <div style="display: flex; justify-content: flex-end; margin-top: -50px;">
+                        <form action="{% url 'remove_user_cookbook' r.pk %}" method="POST" style="display: inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="cookbook" value="{{ cookbook.pk }}">
+                            <button type="submit" style="color: black; margin-right: 10px; margin-top: -20px; font-weight: 500; font-size: 40px;
+                            border: none; background: none;"
+                            onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                                -
+                            </button>
+                        </form>
+                        {% if r in user_account.get_userlikes %}
+                            <a href="{% url 'remove_userlike' r.pk %}" style="color:red"
+                            onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                                &#x2764;
+                            </a>
+                        {% else %}
+                            <a href="{% url 'add_userlike' r.pk %}" style="color: black"
+                            onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                                &#x2764;
+                            </a>
+                        {% endif %}
+                    </div>
                 {% endif %}
             </article>
             {% endfor %}
@@ -93,6 +92,8 @@
                     <p style="margin-top: -20px; font-weight: 800;text-align: center;">Total Likes: {{r.get_likes|length}}</p>
                     <p style="margin-top: -40px; font-weight: 800;text-align: center;">Total Saves: {{r.get_cookbooks|length}}</p>
     
+                    
+                {% if request.user.is_authenticated and request.user == account.user %}
                     <div style="display: flex; justify-content: flex-end; margin-top: -50px;">
                         <form action="{% url 'remove_db_cookbook' r.pk %}" method="POST" style="display: inline;">
                             {% csrf_token %}
@@ -103,18 +104,17 @@
                                 -
                             </button>
                         </form>
-                {% if request.user.is_authenticated and user_account != r.author %}
-                    {% if r in user_account.get_dblikes %}
-                            <a href="{% url 'remove_dblike' r.pk %}" style="color:red">
-                                &#x2764;
-                            </a>
-                    {% else %}
-                            <a href="{% url 'add_dblike' r.pk %}" style="color: black">
-                                &#x2764;
-                            </a>
-                    {% endif %}
+                        {% if r in user_account.get_dblikes %}
+                                <a href="{% url 'remove_dblike' r.pk %}" style="color:red">
+                                    &#x2764;
+                                </a>
+                        {% else %}
+                                <a href="{% url 'add_dblike' r.pk %}" style="color: black">
+                                    &#x2764;
+                                </a>
+                        {% endif %}
+                    </div>
                 {% endif %}
-                </div>
 
                 </article>    
             {% endfor %}
