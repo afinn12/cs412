@@ -3,6 +3,7 @@
 
 {% extends 'recipe/base.html' %}
 {% block content %}
+{% load static %}
 
 <h2 style="margin-left: 70px;">Showing All Accounts</h2>
 <main class="grid-container">
@@ -13,9 +14,7 @@
             {% if a.image_url %}
                 <img src="{{a.image_url}}" alt="{{a.image_url}}" class="explore-img">
             {% else %}
-            <p style="margin: 125 auto;">
-                No Profile Picture
-            </p>
+                <img class="explore-img" src="{% static 'chef.jpg' %}"  alt="No Profile Picture" style="overflow:hidden;">    
             {% endif %}
             <h2 style="margin-bottom: 0;">{{a.first}} {{a.last}}</h2>
             <div >

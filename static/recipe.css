@@ -324,6 +324,7 @@ textarea {
 
 a{
     text-decoration: none;
+    color: black;
 }
 
 a:hover {
@@ -356,6 +357,7 @@ a:hover {
 h1 a{
     color: rgb(80, 0, 0);
 }
+
 
 .recipe-author {
     font-size: 0.9rem;

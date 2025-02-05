@@ -7,7 +7,7 @@
 <div class="box">
     <h1>Login</h1>
 
-    <form class="box2" method="post" action="{% url 'login' %}" >
+    <form class="box2" method="post" action="{% url 'recipe_login' %}" >
         {% csrf_token %}
         {{form}}
         <input type="hidden" name="next" value="{% url 'show_explore' %}">

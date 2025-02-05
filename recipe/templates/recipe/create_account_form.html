@@ -6,7 +6,7 @@
 
     <form method="POST">
         {% csrf_token %}
-        <table style="border: 2px solid black; border-radius: 20px;">
+        <table style="border: 2px solid black; border-radius: 20px; padding-right: 40px;">
             {% if not request.user.is_authenticated %}
                 <tr colspan="2">
                     <td>
@@ -40,15 +40,11 @@
                 <td></td>
                 <td>
                     <div class="delete-button">   
-                        <input class="submit" style="margin-left: 60px;" type="submit" name="submit" value="Create Profile">
+                        <input class="submit" style="margin-left: -100px;" type="submit" name="submit" value="Create Profile">
                     </div>
                 </td>
             </tr>
         </table>
-    </form>
-
-    <form action="{% url 'show_explore' %}">
-        <input class="cancel" style="margin-left: 320px;" type="submit" value="Cancel">
     </form>
 </div>
 {% endblock %}

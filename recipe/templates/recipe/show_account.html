@@ -4,15 +4,21 @@
 
 {% extends 'recipe/base.html' %}
 {% block content %}
+{% load static %}
+
 <div class="box">
     <div style="display: flex; flex-direction: row; gap: 20px;">
+        {% if account.image_url %}
         <img class="account-img" src="{{account.image_url}}" alt="{{article.image_url}}">
+        {% else %}
+        <img class="account-img" src="{% static 'chef.jpg' %}"  alt="No Profile Picture" style="overflow:hidden;"> 
+        {% endif %}
     
         <div> 
             <h1>{{account.first}} {{account.last}}</h1>
             <div style="display: flex; flex-direction: row; column-gap: 100px; margin-top: -48px;">
-                <h3 style="font-weight: 500;">Number of Cookbooks: {{account.get_cookbooks|length }}</h3>   
-                <h3 style="font-weight: 500;">Number of Recipes: {{account.get_recipes|length }} </h3>
+                <h3>Cookbooks: {{account.get_cookbooks|length }}</h3>   
+                <h3>Recipes: {{account.get_recipes|length }} </h3>
                 <!-- show how many recipes you've liked -->
                 {% if account != user_account %}
                     <h3>Recipes Liked by You: {{ account_likes|length}}</h3>
@@ -23,7 +29,7 @@
             </div>
 
             <!-- show specific buttons based on authentication -->
-            <h3 style="margin-top: -4px;font-weight: 500;">{{account.dob}}</h3>
+            <h3 style="margin-top: -4px;">{{account.dob}}</h3>
             {% if request.user.is_authenticated and request.user == account.user %}
                 <h3>{{account.email}}</h3>  
                 <div>
@@ -70,12 +76,13 @@
                 <div>
                     <br>
                     {% if request.user.is_authenticated and user_account == r.author %}    
-                        <p style="margin-top: -20px; font-weight: 800;">
-                            <a href="{% url 'user_likes' r.pk %}" style="color">Total Likes: {{r.get_likes|length}}
-                            </a> 
-                        </p>
+                        <a href="{% url 'user_likes' r.pk %}" style="color: #500404;">
+                            <p style="margin-top: -20px; font-weight: 800;">
+                                Total Likes: {{r.get_likes|length}}
+                            </p>
+                        </a> 
                     {% else %}
-                        <p style="margin-top: -20px; font-weight: 800;">Total Likes: {{r.get_likes|length}}</p>
+                        <p style="margin-top: -20px; font-weight: 800; text-align: center;">Total Likes: {{r.get_likes|length}}</p>
                     {% endif %}
                     <br>
                     <p style="margin-top: -40px; font-weight: 800; text-align: center;">Total Saves: {{r.get_cookbooks|length}}</p>

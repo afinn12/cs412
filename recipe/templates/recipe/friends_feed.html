@@ -23,7 +23,7 @@
                     {% if request.user.is_authenticated and user_account == recipe.author %}    
                                                
                     <p style="margin-top: -20px; font-weight: 800;">
-                        <a href="{% url 'user_likes' recipe.pk %}" style="color">Total Likes: {{recipe.get_likes|length}}
+                        <a href="{% url 'user_likes' recipe.pk %}">Total Likes: {{recipe.get_likes|length}}
                         </a> 
                     </p>
                     {% else %}
