@@ -328,17 +328,17 @@ a{
 }
 
 a:hover {
-    color: #791906;
+    color: #350900;
     text-decoration: underline !important;
 }
 
 .recipe-author a {
-    color: rgb(158, 10, 10);
+    color: #500404;
     text-decoration: none;
 }
 
 h1 a{
-    color: rgb(158, 10, 10);
+    color: #500404;
 }
 
 .recipe-title {
