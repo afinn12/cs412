@@ -8,7 +8,7 @@
 <h2 style="margin-left: 70px;">Explore User Recipes</h2>
 <main class="grid-container">
     {% for r in userrecipes %}
-    <article class="grid-item">
+    <article id="{{ r.pk }}" class="grid-item">
         <a href="{% url 'recipe' r.pk %}" style="color:black">
             {% if r.get_images %}
                 {% for img in r.get_images %}
@@ -24,7 +24,7 @@
         <br>
         {% if request.user.is_authenticated and user_account == r.author %}    
                                                
-        <p style="margin-top: -20px; font-weight: 800;">
+        <p class="recipe-author" style="margin-top: -20px; font-weight: 800; font-size: medium;">
             <a href="{% url 'user_likes' r.pk %}">Total Likes: {{r.get_likes|length}}
             </a> 
         </p>

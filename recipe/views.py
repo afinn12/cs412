@@ -473,7 +473,9 @@ class CreateUserLikeView(View):
 
         # use next to stay on the same page, but reload it
         if next_url:
+            next_url += f"#{kwargs['other_pk']}"
             return redirect(next_url)
+
 
         # else, go to the recipe's page
         return redirect('recipe', pk=recipe.pk)
@@ -505,6 +507,7 @@ class RemoveUserLikeView(View):
 
         # use next to stay on the same page, but reload it
         if next_url:
+            next_url += f"#{kwargs['other_pk']}"
             return redirect(next_url)
 
         # else, go to the recipe's page
@@ -531,10 +534,17 @@ class CreateDBLikeView(View):
         # return HttpResponse(status=204) 
         # return HttpResponse('<script>window.location.reload();</script>', content_type='text/html')
         next_url = request.GET.get('next')
+        page = request.GET.get('page')
 
-        # use next to stay on the same page, but reload it
+        # Use next to stay on the same page, but reload it
         if next_url:
+            # Append the page parameter using '?' 
+            next_url += f"?page={page}" if page else ""
+    
+            # Append the fragment identifier
+            next_url += f"#{recipe_pk}"
             return redirect(next_url)
+
 
         # else, go to the recipe's page
         return redirect('dbrecipe', pk=recipe.pk)
@@ -562,9 +572,13 @@ class RemoveDBLikeView(View):
             raise ValueError("Like does not exist")
 
         next_url = request.GET.get('next')
+        page = request.GET.get('page')
+
 
         # se next to stay on the same page, but reload it
         if next_url:
+            next_url += f"?page={page}" if page else ""
+            next_url += f"#{kwargs['other_pk']}"
             return redirect(next_url)
 
         # else, go to the recipe's page

@@ -7,7 +7,7 @@
 <h2 style="margin-left: 70px;">Database Recipes</h2>
 <main class="grid-container">
     {% for r in dbrecipes %}
-    <article class="grid-item">
+    <article id="{{ r.pk }}" class="grid-item">
         <a href="{% url 'dbrecipe' r.pk %}">
                 <h2 class="db-title">{{ r.title }}</h2>
                 <h3>by {{r.author}}</h3>
@@ -32,12 +32,12 @@
         +</a>
 
         {% if r in user_account.get_dblikes %}
-                <a href="{% url 'remove_dblike' r.pk %}?next={{ request.path }}" style="color:red"
+                <a href="{% url 'remove_dblike' r.pk %}?next={{ request.path }}{% if request.GET.page %}&page={{ request.GET.page }}{% endif %}#{{ r.pk }}" style="color:red"
                 onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
                     &#x2764;
                 </a>
         {% else %}
-                <a href="{% url 'add_dblike' r.pk %}?next={{ request.path }}" style="color: black"
+                <a href="{% url 'add_dblike' r.pk %}?next={{ request.path }}{% if request.GET.page %}&page={{ request.GET.page }}{% endif %}#{{ r.pk }}" style="color: black"
                 onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
                     &#x2764;
                 </a>
