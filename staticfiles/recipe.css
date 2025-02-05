@@ -329,15 +329,11 @@ a{
 
 a:hover {
     color: #350900;
-    text-decoration: underline !important;
+    font-weight: bolder;
 }
 
 .recipe-author a {
     color: #500404;
-    text-decoration: none;
-}
-
-.icon a:hover{
     text-decoration: none;
 }
 
