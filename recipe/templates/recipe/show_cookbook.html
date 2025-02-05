@@ -59,13 +59,13 @@
                             </button>
                         </form>
                         {% if r in user_account.get_userlikes %}
-                            <a href="{% url 'remove_userlike' r.pk %}" style="color:red;"
-                            onmouseover="this.style.transform='scale(2)'; this.style.textDecoration='none';" onmouseout="this.style.transform='scale(1)'">
+                            <a class="icon" href="{% url 'remove_userlike' r.pk %}" style="color:red;"
+                            onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
                                 &#x2764;
                             </a>
                         {% else %}
-                            <a href="{% url 'add_userlike' r.pk %}" style="color: black;"
-                            onmouseover="this.style.transform='scale(2)'; this.style.textDecoration='none';" onmouseout="this.style.transform='scale(1)'">
+                            <a class="icon" href="{% url 'add_userlike' r.pk %}" style="color: black;"
+                            onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
                                 &#x2764;
                             </a>
                         {% endif %}
@@ -105,13 +105,13 @@
                             </button>
                         </form>
                         {% if r in user_account.get_dblikes %}
-                                <a href="{% url 'remove_dblike' r.pk %}" style="color:red"
-                                onmouseover="this.style.transform='scale(2)'; this.style.textDecoration='none';" onmouseout="this.style.transform='scale(1)'">
+                                <a class="icon" href="{% url 'remove_dblike' r.pk %}" style="color:red"
+                                onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
                                     &#x2764;
                                 </a>
                         {% else %}
-                                <a href="{% url 'add_dblike' r.pk %}" style="color: black"
-                                onmouseover="this.style.transform='scale(2)'; this.style.textDecoration='none';" onmouseout="this.style.transform='scale(1)'">
+                                <a class="icon" href="{% url 'add_dblike' r.pk %}" style="color: black"
+                                onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
                                     &#x2764;
                                 </a>
                         {% endif %}

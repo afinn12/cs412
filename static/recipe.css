@@ -337,6 +337,10 @@ a:hover {
     text-decoration: none;
 }
 
+.icon a:hover{
+    text-decoration: none;
+}
+
 h1 a{
     color: #500404;
 }
