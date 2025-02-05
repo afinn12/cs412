@@ -75,12 +75,13 @@
 
                 <div>
                     <br>
-                    {% if request.user.is_authenticated and user_account == r.author %}    
+                    {% if request.user.is_authenticated and user_account == r.author %}  
+                    <p class="recipe-author" style="margin-top: -20px; font-weight: 800; font-size: medium;">
                         <a href="{% url 'user_likes' r.pk %}" style="color: #500404;">
-                            <p style="margin-top: -20px; font-weight: 800;">
                                 Total Likes: {{r.get_likes|length}}
-                            </p>
                         </a> 
+                    </p>
+
                     {% else %}
                         <p style="margin-top: -20px; font-weight: 800; text-align: center;">Total Likes: {{r.get_likes|length}}</p>
                     {% endif %}

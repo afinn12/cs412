@@ -472,8 +472,8 @@ class CreateUserLikeView(View):
         next_url = request.GET.get('next')
 
         # use next to stay on the same page, but reload it
-        if next_url:
-            next_url += f"#{kwargs['other_pk']}"
+        if next_url and str(recipe_pk) not in next_url:
+            next_url += f"#{recipe_pk}"
             return redirect(next_url)
 
 
@@ -487,10 +487,10 @@ class CreateUserLikeView(View):
 # Allows a user to unlike a user recipe
 class RemoveUserLikeView(View):
     def dispatch(self, request, *args, **kwargs):
-        recipe = kwargs.get('other_pk') 
+        recipe_pk = kwargs.get('other_pk') 
         try:
             account = Account.objects.get(user=self.request.user) 
-            recipe = UserRecipe.objects.get(pk=recipe)
+            recipe = UserRecipe.objects.get(pk=recipe_pk)
         except (Account.DoesNotExist, UserRecipe.DoesNotExist):
             raise ValueError("Account or Recipe doesn't exist")
 
@@ -506,8 +506,8 @@ class RemoveUserLikeView(View):
         next_url = request.GET.get('next')
 
         # use next to stay on the same page, but reload it
-        if next_url:
-            next_url += f"#{kwargs['other_pk']}"
+        if next_url and str(recipe_pk) not in next_url:
+            next_url += f"#{recipe_pk}"
             return redirect(next_url)
 
         # else, go to the recipe's page
@@ -537,7 +537,7 @@ class CreateDBLikeView(View):
         page = request.GET.get('page')
 
         # Use next to stay on the same page, but reload it
-        if next_url:
+        if next_url and str(recipe_pk) not in next_url:
             # Append the page parameter using '?' 
             next_url += f"?page={page}" if page else ""
     
@@ -557,10 +557,10 @@ class CreateDBLikeView(View):
 # Allows a user to unlike a database recipe
 class RemoveDBLikeView(View):
     def dispatch(self, request, *args, **kwargs):
-        recipe = kwargs.get('other_pk') 
+        recipe_pk = kwargs.get('other_pk') 
         try:
             account = Account.objects.get(user=self.request.user) 
-            recipe = DBRecipe.objects.get(pk=recipe)
+            recipe = DBRecipe.objects.get(pk=recipe_pk)
         except (Account.DoesNotExist, DBRecipe.DoesNotExist):
             raise ValueError("Account or Recipe doesn't exist")
 
@@ -576,9 +576,9 @@ class RemoveDBLikeView(View):
 
 
         # se next to stay on the same page, but reload it
-        if next_url:
+        if next_url and str(recipe_pk) not in next_url:
             next_url += f"?page={page}" if page else ""
-            next_url += f"#{kwargs['other_pk']}"
+            next_url += f"#{recipe_pk}"
             return redirect(next_url)
 
         # else, go to the recipe's page

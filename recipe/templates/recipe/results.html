@@ -34,7 +34,7 @@
 
             {% for recipe in recipes %}
             <!-- timestamp is used to indicate if a recipe is user or db, since only user recipes have this field -->
-            <tr>
+            <tr id="{{recipe.pk}}">
                 <td>                    
                     <h3 style="color: black;">
                         <!-- link to website or userrecipe -->
@@ -96,8 +96,8 @@
                             </a>
                         {% else %}
                             {% if recipe.timestamp %}
-                                <h3 style="color: black;">
-                                    <a href="{% url 'account' recipe.author.pk %}">
+                                <h3>
+                                    <a href="{% url 'account' recipe.author.pk %}" style="color: rgb(154, 10, 10);">
                                         {{ recipe.author }}
                                     </a>
                                 </h3>
@@ -112,16 +112,15 @@
                 <td>
                     {% if recipe.timestamp %}
                     <a href="{% url 'show_explore' %}">
-                        <h3 style="color: rgb(31, 160, 31);">User Recipe</h3>
+                        <h3 style="color: rgb(154, 10, 10);">User Recipe</h3>
                     </a>
                     {% else %}
                     <a href="{% url 'show_all_dbrecipes' %}">
-                        <h3>Database Recipe</h3>
+                        <h3 style="color: black;">Database Recipe</h3>
                     </a>
                     {% endif %}
                 </td>
-                <td>
-                    
+                <td>  
                     {% if recipe.timestamp %}
                         <a href="{% url 'recipe' recipe.pk %}">
                             <h3 style="color: rgb(60, 60, 190);"
@@ -136,22 +135,51 @@
                                 Add to Cookbook
                             </h3>
                         </a>
+                        {% if recipe.author != user_account %}
+                            <hr>
+                            {% if recipe in user_account.get_userlikes %}
+                                <a href="{% url 'remove_userlike' recipe.pk %}?next={{ request.path }}" style="color:red; font-size: 30px;"
+                                onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                                    &#x2764;
+                                </a>
+                            {% else %}
+                                <a href="{% url 'add_userlike' recipe.pk %}?next={{ request.path }}" style="color: black;font-size: 30px;"
+                                onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                                    &#x2764;
+                                </a>
+                            {% endif %} 
+                        {% endif %}  
                     {% else %}
-                    <a href="{% url 'dbrecipe' recipe.pk %}">
-                        <h3 style="color: rgb(60, 60, 190);"
-                        onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
-                        View Instructions</h3>    
-                    </a> <hr>
-
-                    <a href="{% url 'add_db_cookbook' recipe.pk %}">
-                        <h3 
-                            style="color: rgb(60, 60, 190);"
+                        <a href="{% url 'dbrecipe' recipe.pk %}">
+                            <h3 style="color: rgb(60, 60, 190);"
                             onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
-                            Add to Cookbook
-                        </h3>
-                    </a>
-                    {% endif %}
+                            View Instructions</h3>    
+                        </a> <hr>
 
+                        <a href="{% url 'add_db_cookbook' recipe.pk %}">
+                            <h3 
+                                style="color: rgb(60, 60, 190);"
+                                onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                                Add to Cookbook
+                            </h3>
+                        </a>
+                        {% if recipe.author != user_account %}
+                            <hr>
+                            {% if recipe in user_account.get_dblikes %}
+                                <a href="{% url 'remove_dblike' recipe.pk %}?next={{ request.path }}{% if request.GET.page %}&page={{ request.GET.page }}{% endif %}#{{ r.pk }}" style="color:red; font-size: 30px;"
+                                onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                                    &#x2764;
+                                </a>
+                            {% else %}
+                                <a href="{% url 'add_dblike' recipe.pk %}?next={{ request.path }}{% if request.GET.page %}&page={{ request.GET.page }}{% endif %}#{{ r.pk }}" style="color: black;font-size: 30px;"
+                                onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
+                                    &#x2764;
+                                </a>
+                            {% endif %} 
+                        {% endif %}  
+                    {% endif %}
+                    
+                     
                 </td>
             </tr>
             {% empty %}

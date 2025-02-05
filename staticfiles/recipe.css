@@ -328,7 +328,7 @@ a{
 }
 
 a:hover {
-    color: #521003;
+    color: #791906;
     text-decoration: underline !important;
 }
 
@@ -336,6 +336,7 @@ a:hover {
     color: rgb(158, 10, 10);
     text-decoration: none;
 }
+
 h1 a{
     color: rgb(158, 10, 10);
 }
@@ -400,4 +401,3 @@ h1 a{
     padding: 10px;
 
 }
-
