@@ -192,28 +192,25 @@
     </div>
     </div>
 
-   
-    <!-- toggle between pages with this menu -->
-    {% if is_paginated %}
-    <div class="box" style="text-align: center; width: fit-content;">
-
-        <ul class="pagination">
-                <li class="">
-                    <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
-                </li>
-            {% if page_obj.has_previous %}
-                <li>
-                    <span><a href="?page={{ page_obj.previous_page_number }}" class="page_nav">Previous</a></span>
-                
-                </li>
-            {% endif %}
-            {% if page_obj.has_next %}
-                <li >
-                    <span><a href="?page={{ page_obj.next_page_number }}" class="page_nav">Next</a></span>
-                </li>
-            {% endif %}
-        </ul>
-    </div>
-    {% endif %}
+<!-- toggle between pages with this menu -->
+{% if is_paginated %}
+<div class="box" style="text-align: center; width: fit-content;">
+    <ul class="pagination">
+        <li class="">
+            <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        </li>
+        {% if page_obj.has_previous %}
+            <li>
+                <span><a href="?page={{ page_obj.previous_page_number }}{% if request.GET.title %}&title={{ request.GET.title }}{% endif %}{% if request.GET.description %}&description={{ request.GET.description }}{% endif %}{% if request.GET.ingredients %}&ingredients={{ request.GET.ingredients }}{% endif %}{% if request.GET.author %}&author={{ request.GET.author }}{% endif %}{% if request.GET.type %}&type={{ request.GET.type }}{% endif %}" class="page_nav">Previous</a></span>
+            </li>
+        {% endif %}
+        {% if page_obj.has_next %}
+            <li >
+                <span><a href="?page={{ page_obj.next_page_number }}{% if request.GET.title %}&title={{ request.GET.title }}{% endif %}{% if request.GET.description %}&description={{ request.GET.description }}{% endif %}{% if request.GET.ingredients %}&ingredients={{ request.GET.ingredients }}{% endif %}{% if request.GET.author %}&author={{ request.GET.author }}{% endif %}{% if request.GET.type %}&type={{ request.GET.type }}{% endif %}" class="page_nav">Next</a></span>
+            </li>
+        {% endif %}
+    </ul>
+</div>
+{% endif %}
 </div>
 {% endblock %}

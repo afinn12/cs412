@@ -34,11 +34,13 @@
                             onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
                             +</a>
                             {% if recipe in user_account.get_dblikes %}
-                                    <a href="{% url 'remove_dblike' recipe.pk %}" style="color:red; font-size: 50px;">
+                                    <a href="{% url 'remove_dblike' recipe.pk %}" style="color:red; font-size: 50px;"
+                                    onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
                                         &#x2764;
                                     </a>
                             {% else %}
-                                    <a href="{% url 'add_dblike' recipe.pk %}" style="color: black;font-size: 50px;">
+                                    <a href="{% url 'add_dblike' recipe.pk %}" style="color: black;font-size: 50px;"
+                                    onmouseover="this.style.transform='scale(2)'" onmouseout="this.style.transform='scale(1)'">
                                         &#x2764;
                                     </a>
                             {% endif %}
